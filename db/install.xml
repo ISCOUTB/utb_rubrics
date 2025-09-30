@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="grade/grading/form/utbrubrics/db" VERSION="20250929" COMMENT="XMLDB for UTB rubrics grading method - Production ready clean database structure"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="gradingform_utb_outcomes" COMMENT="Student Outcomes master table with bilingual support">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="so_number" TYPE="char" LENGTH="12" NOTNULL="true" COMMENT="SO number: SO1, SO2, SO3, etc."/>
+        <FIELD NAME="title_en" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="English title"/>
+        <FIELD NAME="title_es" TYPE="char" LENGTH="255" NOTNULL="true" COMMENT="Spanish title"/>
+        <FIELD NAME="description_en" TYPE="text" NOTNULL="true" COMMENT="English description"/>
+        <FIELD NAME="description_es" TYPE="text" NOTNULL="true" COMMENT="Spanish description"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="uq_utb_so_number" TYPE="unique" FIELDS="so_number"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="ix_so_sortorder" UNIQUE="false" FIELDS="sortorder"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="gradingform_utb_indicators" COMMENT="Indicators for each Student Outcome with bilingual support">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="student_outcome_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="indicator_letter" TYPE="char" LENGTH="5" NOTNULL="true" COMMENT="Indicator letter: a, b, c, d, etc."/>
+        <FIELD NAME="description_en" TYPE="text" NOTNULL="true" COMMENT="English description"/>
+        <FIELD NAME="description_es" TYPE="text" NOTNULL="true" COMMENT="Spanish description"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_indicator_so" TYPE="foreign" FIELDS="student_outcome_id" REFTABLE="gradingform_utb_outcomes" REFFIELDS="id"/>
+        <KEY NAME="uq_indicator_so_letter" TYPE="unique" FIELDS="student_outcome_id, indicator_letter"/>
+      </KEYS>
+    </TABLE>
+
+
+
+    <TABLE NAME="gradingform_utb_lvl" COMMENT="Performance levels specific to each indicator with bilingual titles">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="indicator_id" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Reference to specific indicator"/>
+        <FIELD NAME="title_en" TYPE="char" LENGTH="50" NOTNULL="true" COMMENT="English level title (Excellent, Good, Satisfactory, Developing)"/>
+        <FIELD NAME="title_es" TYPE="char" LENGTH="50" NOTNULL="true" COMMENT="Spanish level title (Excelente, Bueno, Satisfactorio, En Desarrollo)"/>
+        <FIELD NAME="description_en" TYPE="text" NOTNULL="true" COMMENT="English level description"/>
+        <FIELD NAME="description_es" TYPE="text" NOTNULL="true" COMMENT="Spanish level description"/>
+        <FIELD NAME="minscore" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="true"/>
+        <FIELD NAME="maxscore" TYPE="number" LENGTH="10" DECIMALS="2" NOTNULL="true"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="Display order (1=highest, 4=lowest)"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_utb_lvl_indicator" TYPE="foreign" FIELDS="indicator_id" REFTABLE="gradingform_utb_indicators" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="ix_lvl_score_range" UNIQUE="false" FIELDS="minscore, maxscore"/>
+        <INDEX NAME="ix_lvl_sortorder" UNIQUE="false" FIELDS="sortorder"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="gradingform_utb_evaluations" COMMENT="Complete grading evaluations - stores all grading information">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Links to grading_instances"/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="activityid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="activityname" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="student_outcome_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="indicator_id" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="performance_level_id" TYPE="int" LENGTH="10" NOTNULL="false"/>
+        <FIELD NAME="score" TYPE="number" LENGTH="10" DECIMALS="5" NOTNULL="false" COMMENT="Final score given"/>
+        <FIELD NAME="feedback" TYPE="text" NOTNULL="false" COMMENT="Teacher feedback"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_eval_instance" TYPE="foreign" FIELDS="instanceid" REFTABLE="grading_instances" REFFIELDS="id"/>
+        <KEY NAME="fk_eval_student" TYPE="foreign" FIELDS="studentid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="fk_eval_course" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="fk_eval_so" TYPE="foreign" FIELDS="student_outcome_id" REFTABLE="gradingform_utb_outcomes" REFFIELDS="id"/>
+        <KEY NAME="fk_eval_indicator" TYPE="foreign" FIELDS="indicator_id" REFTABLE="gradingform_utb_indicators" REFFIELDS="id"/>
+        <KEY NAME="fk_eval_perf_level" TYPE="foreign" FIELDS="performance_level_id" REFTABLE="gradingform_utb_lvl" REFFIELDS="id"/>
+        <KEY NAME="uq_eval_instance_indicator" TYPE="unique" FIELDS="instanceid, indicator_id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="ix_eval_activity" UNIQUE="false" FIELDS="activityid"/>
+        <INDEX NAME="ix_eval_score" UNIQUE="false" FIELDS="score"/>
+        <INDEX NAME="ix_eval_time" UNIQUE="false" FIELDS="timecreated, timemodified"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

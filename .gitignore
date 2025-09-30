@@ -1,0 +1,74 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# PHP
+vendor/
+composer.lock
+
+# Moodle Plugin Packages (generated locally)
+moodle-gradingform_utbrubrics-*.zip
+temp_moodle_package/
+test_validation/
+
+# PHPUnit
+.phpunit.result.cache
+phpunit.xml
+/coverage/
+
+# Moodle specific
+moodledata/
+config.php
+
+# Node.js (if using Grunt/Gulp)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Local development
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Documentation builds
+docs/_build/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Local build/release testing files
+*.backup
+temp_*
+create_moodle_package.sh
