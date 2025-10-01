@@ -764,6 +764,477 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                     font-size: 1em !important;
                 }
             }
+
+            /* Instructor evaluation layout */
+            .gradingform_utbrubrics .evaluator-hint {
+                background: rgba(3, 127, 127, 0.1);
+                border-left: 4px solid #037f7f;
+                border-radius: 10px;
+                padding: 16px 20px;
+                color: #055160;
+                font-size: 0.95em;
+                margin-bottom: 22px;
+            }
+
+            .gradingform_utbrubrics .instructor-evaluation {
+                display: flex;
+                flex-direction: column;
+                gap: 28px;
+                margin-top: 25px;
+            }
+
+            .gradingform_utbrubrics .indicator-card {
+                background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,252,0.98));
+                border-radius: 22px;
+                border: 1px solid rgba(3, 127, 127, 0.12);
+                box-shadow: 0 18px 45px rgba(8, 35, 64, 0.07);
+                padding: 32px;
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.25s ease, box-shadow 0.25s ease;
+                border-left: 6px solid rgba(5, 160, 160, 0.6);
+            }
+
+            .gradingform_utbrubrics .indicator-card:before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(5,160,160,0.07), rgba(3,127,127,0.02));
+                opacity: 0;
+                transition: opacity 0.25s ease;
+                pointer-events: none;
+            }
+
+            .gradingform_utbrubrics .indicator-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 22px 55px rgba(8, 35, 64, 0.09);
+            }
+
+            .gradingform_utbrubrics .indicator-card:hover:before,
+            .gradingform_utbrubrics .indicator-card:focus-within:before {
+                opacity: 1;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-header {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                margin-bottom: 26px;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-badge {
+                min-width: 56px;
+                height: 56px;
+                border-radius: 18px;
+                background: linear-gradient(135deg, rgba(5,160,160,0.9), rgba(3,127,127,0.85));
+                color: #ffffff;
+                font-weight: 700;
+                font-size: 1.3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 12px 30px rgba(5,160,160,0.25);
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-header-text {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-title {
+                font-size: 1.18rem;
+                font-weight: 600;
+                color: #0f2d3d;
+                letter-spacing: -0.01em;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-description {
+                color: #4a5c68;
+                line-height: 1.55;
+                margin: 0;
+                font-size: 0.98rem;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-helper {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.85rem;
+                color: #056b6b;
+                background: rgba(5, 160, 160, 0.08);
+                border-radius: 999px;
+                padding: 6px 14px;
+                letter-spacing: 0.04em;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-levels {
+                order: 1;
+                width: 100%;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-side {
+                order: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+                width: 100%;
+                justify-items: stretch;
+                align-items: stretch;
+                grid-auto-rows: 1fr;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-1 {
+                grid-template-columns: 1fr;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-3,
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            @media (max-width: 960px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option {
+                padding: 0;
+                width: 100%;
+                min-width: 0;
+                height: 100%;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
+                border-radius: 16px !important;
+                border: 1px solid rgba(8, 35, 64, 0.1) !important;
+                box-shadow: 0 12px 32px rgba(15, 45, 61, 0.12) !important;
+                overflow: hidden;
+                min-height: 170px;
+                height: 100%;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card .card-body {
+                width: 100%;
+                height: 100%;
+                padding: 0 !important;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card:after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(140deg, rgba(3, 127, 127, 0.08), rgba(5, 160, 160, 0));
+                opacity: 0;
+                transition: opacity 0.25s ease;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .card:after,
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:focus-within .card:after {
+                opacity: 1;
+            }
+
+            .gradingform_utbrubrics .modern-level-card {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .gradingform_utbrubrics .modern-level-main {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                min-height: 180px;
+                padding: 32px 24px;
+                flex: 1;
+                text-align: center;
+            }
+
+            .gradingform_utbrubrics .modern-level-name {
+                font-weight: 700;
+                font-size: 1.25rem;
+                color: #0f2d3d;
+                text-align: center;
+                line-height: 1.3;
+                letter-spacing: -0.02em;
+            }
+
+            .gradingform_utbrubrics .modern-level-range {
+                font-size: 0.90rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #5f7a86;
+                font-weight: 500;
+                text-align: center;
+            }
+
+            .gradingform_utbrubrics .level-hover-description {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px 20px;
+                background: linear-gradient(145deg, rgba(3, 100, 100, 0.96), rgba(5, 127, 127, 0.94));
+                color: #ffffff;
+                text-align: center;
+                opacity: 0;
+                transform: scale(0.98);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                pointer-events: none;
+                border-radius: 16px;
+                visibility: hidden;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .gradingform_utbrubrics .level-hover-description .hover-content {
+                font-size: 1rem;
+                line-height: 1.65;
+                font-weight: 400;
+                max-width: 100%;
+                width: 100%;
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+            }
+
+            /* Tamaños adaptativos basados en longitud del texto */
+            .gradingform_utbrubrics .level-hover-description.text-short .hover-content {
+                font-size: 1rem;
+                line-height: 1.65;
+            }
+
+            .gradingform_utbrubrics .level-hover-description.text-medium .hover-content {
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }
+
+            .gradingform_utbrubrics .level-hover-description.text-long .hover-content {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                padding: 2px 0;
+            }
+
+            .gradingform_utbrubrics .level-hover-description.text-very-long .hover-content {
+                font-size: 0.78rem;
+                line-height: 1.35;
+                padding: 4px 0;
+            }
+
+            /* Scrollbar sutil para textos muy largos */
+            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 3px;
+            }
+
+            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 3px;
+            }
+
+            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.5);
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .level-hover-description,
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:focus-within .level-hover-description {
+                opacity: 1;
+                transform: scale(1);
+                visibility: visible;
+            }
+
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:not(:hover):not(:focus-within) .level-hover-description {
+                opacity: 0;
+                transform: scale(0.98);
+                visibility: hidden;
+            }
+
+            /* Forzar ocultación cuando se deselecciona - mayor especificidad */
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.force-hide-hover .level-hover-description {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: scale(0.98) !important;
+                pointer-events: none !important;
+            }
+
+            .gradingform_utbrubrics .selected-level-chip {
+                display: inline-block;
+                padding: 8px 16px;
+                border-radius: 999px;
+                background: linear-gradient(135deg, #037f7f, #05a0a0);
+                color: #ffffff;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+            }
+
+            .gradingform_utbrubrics .indicator-insight {
+                margin: 0;
+                padding: 20px 22px;
+                background: rgba(5, 160, 160, 0.08);
+                border-radius: 16px;
+                border: 1px solid rgba(5, 160, 160, 0.12);
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+            }
+
+            .gradingform_utbrubrics .indicator-insight .insight-title {
+                font-size: 0.72rem;
+                text-transform: uppercase;
+                letter-spacing: 0.18em;
+                color: #056b6b;
+                margin-bottom: 14px;
+                font-weight: 700;
+            }
+
+            .gradingform_utbrubrics .selected-level-description {
+                font-size: 0.98rem;
+                line-height: 1.6;
+                color: #0f2d3d;
+                min-height: 56px;
+            }
+
+            .gradingform_utbrubrics .selected-level-description:not(.has-selection) {
+                color: #5f7583;
+            }
+
+            .gradingform_utbrubrics .indicator-card .indicator-grading {
+                background: rgba(255,255,255,0.94);
+                border-radius: 18px;
+                box-shadow: 0 14px 34px rgba(8, 35, 64, 0.12);
+                padding: 6px;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls {
+                background: linear-gradient(145deg, rgba(249,252,255,0.9), rgba(238,246,249,0.9));
+                border-radius: 14px;
+                padding: 20px;
+                box-shadow: inset 0 0 0 1px rgba(3, 127, 127, 0.05);
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .grading-row {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 20px;
+                align-items: start;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .grading-col {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .grading-col-score {
+                min-width: 0;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .grading-col-feedback {
+                min-width: 0;
+            }
+
+            @media (max-width: 768px) {
+                .gradingform_utbrubrics .indicator-card .grading-controls .grading-row {
+                    grid-template-columns: 1fr;
+                    gap: 16px;
+                }
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls textarea {
+                resize: vertical;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .form-label {
+                font-weight: 600;
+                color: #0f2d3d;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .score-range-display {
+                font-size: 0.85rem;
+                letter-spacing: 0.05em;
+                text-align: center;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .feedback-input {
+                border-radius: 10px;
+                border-color: rgba(8, 35, 64, 0.12);
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .gradingform_utbrubrics .indicator-card .grading-controls .feedback-input:focus {
+                border-color: #037f7f;
+                box-shadow: 0 0 0 0.2rem rgba(5,160,160,0.15);
+            }
+
+            .gradingform_utbrubrics .selected-level-meta {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 12px;
+            }
+
+            .gradingform_utbrubrics .selected-level-meta .level-range-pill {
+                padding: 6px 12px;
+                border-radius: 999px;
+                background: rgba(3,127,127,0.12);
+                color: #055160;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            @media (max-width: 640px) {
+                .gradingform_utbrubrics .indicator-card {
+                    padding: 22px 18px;
+                }
+
+                .gradingform_utbrubrics .indicator-card .indicator-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 14px;
+                }
+
+                .gradingform_utbrubrics .indicator-card .grading-controls {
+                    padding: 18px;
+                }
+            }
         ');
 
         // Display UTB rubric with NEW single Student Outcome structure
@@ -877,39 +1348,45 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
         }
         
         $out .= html_writer::end_div(); // Close so-header-container
-        
-        // Indicators table
-        $out .= html_writer::start_div('table-responsive-mobile');
-        $out .= html_writer::start_tag('table', ['class' => 'rubric-table table']);
-        
-        // Table header
-        $out .= html_writer::start_tag('thead');
-        $out .= html_writer::start_tag('tr');
-        $out .= html_writer::tag('th', get_string('performanceindicator', 'gradingform_utbrubrics'), ['class' => 'criterion-header']);
-        $out .= html_writer::tag('th', get_string('performancelevelsdescriptions', 'gradingform_utbrubrics'), ['class' => 'levels-header']);
 
-        if ($shouldshowgrade) {
-            if ($this->is_grading_mode($mode)) {
-                $gradeheader = get_string('gradeselectlevel', 'gradingform_utbrubrics');
-            } else if ($mode == gradingform_utbrubrics_controller::DISPLAY_STUDENT_RESULT) {
-                $gradeheader = get_string('yourgradefeedback', 'gradingform_utbrubrics');
-            } else {
-                $gradeheader = get_string('recordedgradefeedback', 'gradingform_utbrubrics');
+        if ($this->is_grading_mode($mode)) {
+            $out .= html_writer::start_div('instructor-evaluation');
+            foreach ($rubric['criteria'] as $indicator) {
+                $out .= $this->render_indicator_row($indicator, $rubric, $options, $mode, $elementname, $value, $shouldshowgrade);
             }
+            $out .= html_writer::end_div();
+        } else {
+            // Indicators table (student and preview modes)
+            $out .= html_writer::start_div('table-responsive-mobile');
+            $out .= html_writer::start_tag('table', ['class' => 'rubric-table table']);
 
-            $out .= html_writer::tag('th', $gradeheader, ['class' => 'grade-header']);
+            // Table header
+            $out .= html_writer::start_tag('thead');
+            $out .= html_writer::start_tag('tr');
+            $out .= html_writer::tag('th', get_string('performanceindicator', 'gradingform_utbrubrics'), ['class' => 'criterion-header']);
+            $out .= html_writer::tag('th', get_string('performancelevelsdescriptions', 'gradingform_utbrubrics'), ['class' => 'levels-header']);
+
+            if ($shouldshowgrade) {
+                if ($mode == gradingform_utbrubrics_controller::DISPLAY_STUDENT_RESULT) {
+                    $gradeheader = get_string('yourgradefeedback', 'gradingform_utbrubrics');
+                } else {
+                    $gradeheader = get_string('recordedgradefeedback', 'gradingform_utbrubrics');
+                }
+
+                $out .= html_writer::tag('th', $gradeheader, ['class' => 'grade-header']);
+            }
+            $out .= html_writer::end_tag('tr');
+            $out .= html_writer::end_tag('thead');
+
+            // Table body - one row per indicator
+            $out .= html_writer::start_tag('tbody');
+            foreach ($rubric['criteria'] as $indicator) {
+                $out .= $this->render_indicator_row($indicator, $rubric, $options, $mode, $elementname, $value, $shouldshowgrade);
+            }
+            $out .= html_writer::end_tag('tbody');
+            $out .= html_writer::end_tag('table');
+            $out .= html_writer::end_div(); // Close table-responsive-mobile
         }
-        $out .= html_writer::end_tag('tr');
-        $out .= html_writer::end_tag('thead');
-        
-        // Table body - one row per indicator
-        $out .= html_writer::start_tag('tbody');
-        foreach ($rubric['criteria'] as $indicator) {
-            $out .= $this->render_indicator_row($indicator, $rubric, $options, $mode, $elementname, $value, $shouldshowgrade);
-        }
-        $out .= html_writer::end_tag('tbody');
-        $out .= html_writer::end_tag('table');
-        $out .= html_writer::end_div(); // Close table-responsive-mobile
         $out .= html_writer::end_div(); // Close student-outcome-section
         
         return $out;
@@ -934,7 +1411,110 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
     private function render_indicator_row($indicator, $rubric, $options, $mode, $elementname, $value, bool $showgradecolumn = false) {
         $indicator_id = $indicator['id'];
         $current_value = isset($value['criteria'][$indicator_id]) ? $value['criteria'][$indicator_id] : [];
-        
+        $isgrading = $this->is_grading_mode($mode);
+
+        if ($isgrading) {
+            $indicatorname = trim((string)($indicator['indicator'] ?? get_string('indicator', 'gradingform_utbrubrics')));
+            $indicatorcode = $indicatorname !== '' ? preg_replace('/\.$/', '', $indicatorname) : get_string('indicator', 'gradingform_utbrubrics');
+            $indicatordescription = trim((string)($indicator['description'] ?? ''));
+
+            $levels_html = '';
+            if (!empty($indicator['levels'])) {
+                $levels_html = $this->render_indicator_performance_levels($indicator['levels'], $indicator_id, $mode, $elementname, $current_value);
+            }
+
+            $grade_html = $showgradecolumn ? $this->render_grading_controls($indicator, $rubric, $mode, $elementname, $current_value) : '';
+
+            $levels = $indicator['levels'] ?? [];
+            $selected_level = $this->resolve_selected_level($levels, $current_value);
+            $selected_name = trim((string)($current_value['performance_level_name'] ?? ($selected_level['definition'] ?? '')));
+            $selected_description = trim((string)($selected_level['description'] ?? ''));
+
+            if ($selected_description === '' && isset($current_value['level_description'])) {
+                $selected_description = trim((string)$current_value['level_description']);
+            }
+
+            $formatted_selected_description = '';
+            if ($selected_description !== '') {
+                $formatted_selected_description = trim(format_text($selected_description, FORMAT_MOODLE, [
+                    'context' => $this->page->context ?? null,
+                    'para' => false
+                ]));
+            }
+
+            $range_text = '';
+            if ($selected_level && isset($selected_level['min']) && isset($selected_level['max'])) {
+                $range_text = get_string('graderange', 'gradingform_utbrubrics', (object)[
+                    'min' => number_format((float)$selected_level['min'], 2, '.', ''),
+                    'max' => number_format((float)$selected_level['max'], 2, '.', '')
+                ]);
+            } else if (isset($current_value['minscore']) && isset($current_value['maxscore'])) {
+                $range_text = get_string('graderange', 'gradingform_utbrubrics', (object)[
+                    'min' => number_format((float)$current_value['minscore'], 2, '.', ''),
+                    'max' => number_format((float)$current_value['maxscore'], 2, '.', '')
+                ]);
+            }
+
+            $defaultprompt = get_string('indicator_select_prompt', 'gradingform_utbrubrics');
+            $description_classes = 'selected-level-description';
+            $description_content = $defaultprompt;
+            if ($formatted_selected_description !== '') {
+                $description_classes .= ' has-selection';
+                $description_content = $formatted_selected_description;
+            }
+
+            $chip = html_writer::span(
+                format_string($selected_name),
+                'selected-level-chip' . ($selected_name === '' ? ' d-none' : ''),
+                ['data-placeholder' => '']
+            );
+
+            $rangepill = html_writer::span(
+                format_string($range_text),
+                'level-range-pill selected-level-range' . ($range_text === '' ? ' d-none' : ''),
+                ['data-placeholder' => '']
+            );
+
+            $meta = html_writer::div($chip . $rangepill, 'selected-level-meta');
+
+            $summary = html_writer::start_div('indicator-summary indicator-insight');
+            $summary .= html_writer::div(get_string('indicator_selected_heading', 'gradingform_utbrubrics'), 'insight-title text-uppercase');
+            $summary .= $meta;
+            $summary .= html_writer::tag('div', $description_content, [
+                'class' => $description_classes,
+                'data-default-message' => $defaultprompt
+            ]);
+            $summary .= html_writer::end_div();
+
+            $out = html_writer::start_div('indicator-card indicator-row', ['data-indicator-id' => $indicator_id]);
+            $out .= html_writer::start_div('indicator-header');
+            $out .= html_writer::div(format_string($indicatorcode), 'indicator-badge');
+            $out .= html_writer::start_div('indicator-header-text');
+            if ($indicatordescription !== '') {
+                $out .= html_writer::div(format_string($indicatordescription), 'indicator-title');
+            } else {
+                $out .= html_writer::div(format_string($indicatorcode), 'indicator-title');
+            }
+            $out .= html_writer::div(get_string('indicator_hover_helper', 'gradingform_utbrubrics'), 'indicator-helper');
+            $out .= html_writer::end_div();
+            $out .= html_writer::end_div();
+
+            $out .= html_writer::start_div('indicator-layout');
+            $out .= $levels_html;
+
+            $out .= html_writer::start_div('indicator-side');
+            if ($grade_html !== '') {
+                $out .= html_writer::div($grade_html, 'indicator-grading');
+            }
+            $out .= $summary;
+            $out .= html_writer::end_div();
+
+            $out .= html_writer::end_div();
+            $out .= html_writer::end_div();
+
+            return $out;
+        }
+
         $out = '';
         $out .= html_writer::start_tag('tr', ['class' => 'indicator-row', 'data-indicator-id' => $indicator_id]);
         
@@ -1253,6 +1833,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
     protected function render_performance_levels($cid, array $levels, string $elementname, array $value = null, int $mode): string {
         $checkedlevel = $value['criteria'][$cid]['levelid'] ?? null;
         
+
+        
         // Check different display modes
         $isStudentView = ($mode == gradingform_utbrubrics_controller::DISPLAY_VIEW);
         $isStudentResult = ($mode == gradingform_utbrubrics_controller::DISPLAY_STUDENT_RESULT);
@@ -1274,14 +1856,15 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
         $levelsClass = 'levels-' . min($levelCount, 6); // Cap at 6 for CSS support
         $out = html_writer::start_div('performance-levels ' . $levelsClass);
         
-        foreach ($levels as $lid => $lev) {
-            $isSelected = ((string)$checkedlevel === (string)$lid);
+        foreach ($levels as $level) {
+            $levelid = $level['id'];
+            $isselected = ((string)$checkedlevel === (string)$levelid);
             
             // Add level type class and selection state - support both English and Spanish
             $range = number_format($lev['min'], 2) . ' - ' . number_format($lev['max'], 2);
             $levelTypeClass = $this->get_level_type_class($lev['definition']);
             
-            $levelClass = 'level-option ' . $levelTypeClass . ($isSelected ? ' selected' : '');
+            $levelClass = 'level-option ' . $levelTypeClass . ($isselected ? ' selected' : '');
             $levelAttributes = [
                 'data-min' => $lev['min'],
                 'data-max' => $lev['max'],
@@ -1296,7 +1879,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 'class' => 'level-radio'
             ];
             
-            if ($isSelected) {
+            if ($isselected) {
                 $radioattrs['checked'] = 'checked';
             }
             
@@ -1330,15 +1913,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             $out .= html_writer::div(
                 html_writer::empty_tag('input', $radioattrs) .
-                html_writer::tag('label', 
-                    html_writer::div($labelContent, 'card h-100 border-light'),
-                    [
-                        'for' => "{$elementname}_{$cid}_{$lid}",
-                        'class' => 'level-label w-100 cursor-pointer'
-                    ]
-                ),
-                $levelClass,
-                $levelAttributes
+                html_writer::tag('label', $cardcontent, [
+                    'for' => $radioid,
+                    'class' => 'level-card-label w-100'
+                ]),
+                $optionattrs
             );
         }
         
@@ -1763,7 +2342,7 @@ JS;
             // Teacher feedback (if available)
             if (!empty($feedback)) {
                 $out .= html_writer::div(
-                    html_writer::tag('strong', get_string('teacher_feedback', 'gradingform_utbrubrics'), ['class' => 'small text-muted d-block mb-2']) .
+                    html_writer::tag('strong', get_string('teacher_feedback', 'gradingform_utbrubrics'), ['class' => 'small text-muted d-block mb-1']) .
                     html_writer::div(format_text($feedback, FORMAT_MOODLE), 'feedback-text p-3 border-left border-primary bg-light rounded', ['style' => 'border-left-width: 4px !important;']),
                     'teacher-feedback'
                 );
@@ -1899,7 +2478,7 @@ JS;
             // Level name with range - this should be the header/title
             $labelContent .= html_writer::div(
                 html_writer::tag('strong', format_string($lev['definition'])),
-                'level-name text-center mb-2 bg-light p-2 rounded'
+                'level-name text-center mb-2'
             );
             
             // Add detailed description ONLY if it exists and is not empty
@@ -1931,9 +2510,15 @@ JS;
         $levelcount = max(1, min(count($levels), 6));
         $selectedlevel = $this->resolve_selected_level($levels, $current_value);
         $selectedlevelid = $selectedlevel['id'] ?? ($current_value['performance_level_id'] ?? null);
+        $isgrading = $this->is_grading_mode($mode);
+
+        $classes = ['performance-levels', 'levels-' . $levelcount];
+        if ($isgrading) {
+            $classes[] = 'modern-levels';
+        }
 
         $containerattrs = [
-            'class' => 'performance-levels levels-' . $levelcount,
+            'class' => implode(' ', $classes),
             'data-indicator-id' => $indicator_id
         ];
 
@@ -1960,19 +2545,30 @@ JS;
             $rangetext = ($minvalue !== '' && $maxvalue !== '') ?
                 get_string('graderange', 'gradingform_utbrubrics', $rangeobject) : '';
 
+            $levelname = format_string($level['definition'] ?? '');
+            $leveldescription = '';
+            if (!empty(trim((string)($level['description'] ?? '')))) {
+                $leveldescription = trim(format_text($level['description'], FORMAT_MOODLE, [
+                    'context' => $this->page->context ?? null,
+                    'para' => false
+                ]));
+            }
+
             $optionattrs = [
                 'class' => $levelclass,
                 'data-level-id' => $levelid,
                 'data-indicator-id' => $indicator_id,
                 'data-min' => $minvalue,
                 'data-max' => $maxvalue,
-                'data-level-name' => format_string($level['definition'] ?? ''),
+                'data-level-name' => $levelname,
                 'data-level-type' => $leveltype,
                 'data-range-label' => $rangetext,
-                'tabindex' => $this->is_grading_mode($mode) ? '0' : '-1'
+                'tabindex' => $isgrading ? '0' : '-1'
             ];
 
-            if (!$this->is_grading_mode($mode)) {
+            if ($isgrading) {
+                $optionattrs['data-level-description'] = $leveldescription;
+            } else {
                 $optionattrs['data-readonly'] = '1';
             }
 
@@ -1989,44 +2585,67 @@ JS;
                 $radioattrs['checked'] = 'checked';
             }
 
-            if (!$this->is_grading_mode($mode)) {
+            if (!$isgrading) {
                 $radioattrs['disabled'] = 'disabled';
             }
 
-            $cardbody = html_writer::start_div('card-body p-3');
-            $cardbody .= html_writer::div(
-                html_writer::tag('strong', format_string($level['definition'] ?? '')),
-                'level-name text-center mb-2'
-            );
+            $labelattrs = [
+                'for' => $radioid,
+                'class' => 'level-card-label w-100'
+            ];
 
-            if (!empty($rangetext)) {
-                $cardbody .= html_writer::div($rangetext, 'level-range text-center text-muted small');
-            }
+            // No agregar title para evitar tooltip nativo del navegador
+            // La descripción se muestra en el hover overlay personalizado
 
-            if (!empty($level['description'])) {
+            if ($isgrading) {
+                $cardbody = html_writer::start_div('card-body p-0 h-100');
+                $cardbody .= html_writer::start_div('modern-level-card');
+                $cardbody .= html_writer::start_div('modern-level-main');
+                $cardbody .= html_writer::div($levelname, 'modern-level-name');
+                if ($rangetext !== '') {
+                    $cardbody .= html_writer::div($rangetext, 'modern-level-range');
+                }
+                $cardbody .= html_writer::end_div();
+                if ($leveldescription !== '') {
+                    $cardbody .= html_writer::div(
+                        html_writer::div($leveldescription, 'hover-content'),
+                        'level-hover-description',
+                        ['aria-hidden' => 'true']
+                    );
+                    $cardbody .= html_writer::span(trim(strip_tags($leveldescription)), 'visually-hidden level-description-text');
+                }
+                $cardbody .= html_writer::end_div();
+                $cardbody .= html_writer::end_div();
+                $cardcontent = html_writer::div($cardbody, 'card level-card h-100');
+            } else {
+                $cardbody = html_writer::start_div('card-body p-3');
                 $cardbody .= html_writer::div(
-                    format_string($level['description']),
-                    'level-description card-text small mt-2'
+                    html_writer::tag('strong', $levelname),
+                    'level-name text-center mb-2'
                 );
+                if (!empty($rangetext)) {
+                    $cardbody .= html_writer::div($rangetext, 'level-range text-center text-muted small');
+                }
+                if ($leveldescription !== '') {
+                    $cardbody .= html_writer::div(
+                        $leveldescription,
+                        'level-description card-text small mt-2'
+                    );
+                }
+                $cardbody .= html_writer::end_div();
+                $cardcontent = html_writer::div($cardbody, 'card level-card h-100');
             }
-
-            $cardbody .= html_writer::end_div();
-
-            $cardcontent = html_writer::div($cardbody, 'card level-card h-100');
 
             $out .= html_writer::tag('div',
                 html_writer::empty_tag('input', $radioattrs) .
-                html_writer::tag('label', $cardcontent, [
-                    'for' => $radioid,
-                    'class' => 'level-card-label w-100'
-                ]),
+                html_writer::tag('label', $cardcontent, $labelattrs),
                 $optionattrs
             );
         }
 
         $out .= html_writer::end_tag('div');
 
-        if ($this->is_grading_mode($mode)) {
+        if ($isgrading) {
             static $cardsinitialised = false;
 
             if (!$cardsinitialised) {
@@ -2050,6 +2669,9 @@ JS;
         var controls = row.querySelector('.grading-controls');
         var scoreInput = controls ? controls.querySelector('.score-input') : null;
         var rangeDisplay = controls ? controls.querySelector('.score-range-display') : null;
+        var descriptionPane = row.querySelector('.selected-level-description');
+        var levelChip = row.querySelector('.selected-level-chip');
+        var rangePill = row.querySelector('.selected-level-range');
 
         if (scoreInput) {
             scoreInput.value = '';
@@ -2065,6 +2687,22 @@ JS;
             rangeDisplay.className = 'score-range-display small text-muted mt-1';
             rangeDisplay.dataset.currentText = defaultText;
             rangeDisplay.dataset.rangeLabel = '';
+        }
+
+        if (descriptionPane) {
+            var defaultMessage = descriptionPane.dataset.defaultMessage || '';
+            descriptionPane.textContent = defaultMessage;
+            descriptionPane.classList.remove('has-selection');
+        }
+
+        if (levelChip) {
+            levelChip.textContent = levelChip.dataset.placeholder || '';
+            levelChip.classList.add('d-none');
+        }
+
+        if (rangePill) {
+            rangePill.textContent = rangePill.dataset.placeholder || '';
+            rangePill.classList.add('d-none');
         }
     }
 
@@ -2100,10 +2738,15 @@ JS;
         var controls = row.querySelector('.grading-controls');
         var scoreInput = controls ? controls.querySelector('.score-input') : null;
         var rangeDisplay = controls ? controls.querySelector('.score-range-display') : null;
+        var descriptionPane = row.querySelector('.selected-level-description');
+        var levelChip = row.querySelector('.selected-level-chip');
+        var rangePill = row.querySelector('.selected-level-range');
 
         var min = parseFloat(option.dataset.min);
         var max = parseFloat(option.dataset.max);
         var rangeLabel = option.dataset.rangeLabel || '';
+        var descriptionHtml = option.dataset.levelDescription || '';
+        var levelName = option.dataset.levelName || '';
 
         if (scoreInput) {
             scoreInput.disabled = false;
@@ -2114,18 +2757,29 @@ JS;
                 scoreInput.max = max;
             }
 
-            if (scoreInput.value !== '') {
+            // Auto-llenar con la nota máxima del nivel si el campo está vacío
+            if (scoreInput.value === '' || scoreInput.value.trim() === '') {
+                if (!isNaN(max)) {
+                    scoreInput.value = max.toFixed(2);
+                }
+            } else {
+                // Si ya tiene un valor, verificar si está fuera de rango
                 var current = parseFloat(scoreInput.value);
-                if (( !isNaN(min) && current < min) || ( !isNaN(max) && current > max)) {
-                    scoreInput.value = '';
+                if ((!isNaN(min) && current < min) || (!isNaN(max) && current > max)) {
+                    // Si está fuera de rango, poner la nota máxima
+                    if (!isNaN(max)) {
+                        scoreInput.value = max.toFixed(2);
+                    } else {
+                        scoreInput.value = '';
+                    }
                 }
             }
 
             scoreInput.classList.remove('is-valid', 'is-invalid');
 
+            // No seleccionar el texto automáticamente, solo hacer foco si es necesario
             if (focusScore && !scoreInput.readOnly) {
                 scoreInput.focus();
-                scoreInput.select();
             }
         }
 
@@ -2135,6 +2789,37 @@ JS;
             rangeDisplay.className = 'score-range-display small text-muted mt-1';
             rangeDisplay.dataset.currentText = baseText;
             rangeDisplay.dataset.rangeLabel = rangeLabel || '';
+        }
+
+        if (descriptionPane) {
+            var defaultMessage = descriptionPane.dataset.defaultMessage || '';
+            if (descriptionHtml) {
+                descriptionPane.innerHTML = descriptionHtml;
+                descriptionPane.classList.add('has-selection');
+            } else {
+                descriptionPane.textContent = defaultMessage;
+                descriptionPane.classList.remove('has-selection');
+            }
+        }
+
+        if (levelChip) {
+            if (levelName) {
+                levelChip.textContent = levelName;
+                levelChip.classList.remove('d-none');
+            } else {
+                levelChip.textContent = levelChip.dataset.placeholder || '';
+                levelChip.classList.add('d-none');
+            }
+        }
+
+        if (rangePill) {
+            if (rangeLabel) {
+                rangePill.textContent = rangeLabel;
+                rangePill.classList.remove('d-none');
+            } else {
+                rangePill.textContent = rangePill.dataset.placeholder || '';
+                rangePill.classList.add('d-none');
+            }
         }
 
         validateScoreInput(scoreInput);
@@ -2166,12 +2851,10 @@ JS;
 
         var rawValue = input.value.trim();
 
-        // Don't validate empty inputs
         if (rawValue === '') {
             return;
         }
 
-        // Basic format checks
         var justDot = rawValue === '.';
         var justComma = rawValue === ',';
         var hasComma = rawValue.indexOf(',') !== -1;
@@ -2181,7 +2864,6 @@ JS;
         var hasTrailingDot = rawValue.endsWith('.');
         var hasTrailingComma = rawValue.endsWith(',');
 
-        // Treat any comma usage as invalid input (keep behaviour consistent with previous validation)
         var invalidCommaUsage = hasComma;
 
         var invalidFormat = justDot || justComma || hasNonNumeric || hasMultipleDots || hasTrailingDot || hasTrailingComma || invalidCommaUsage;
@@ -2191,29 +2873,12 @@ JS;
             value = parseFloat(rawValue);
         }
         var isParseable = !isNaN(value) && isFinite(value);
-
-        // A number is valid only when the format is correct and it's parseable
         var isValidNumber = !invalidFormat && isParseable;
-
-        // Debug logging for testing
-        console.log('Validating:', rawValue, {
-            justDot: justDot,
-            justComma: justComma,
-            hasComma: hasComma,
-            hasNonNumeric: hasNonNumeric,
-            hasMultipleDots: hasMultipleDots,
-            hasTrailingDot: hasTrailingDot,
-            hasTrailingComma: hasTrailingComma,
-            invalidFormat: invalidFormat,
-            isParseable: isParseable,
-            value: value,
-            isValidNumber: isValidNumber
-        });
 
         if (!isValidNumber) {
             input.classList.add('is-invalid');
             if (rangeDisplay) {
-                var invalidText = rangeDisplay.dataset.rangeLabel || rangeDisplay.dataset.currentText || rangeDisplay.dataset.defaultText || 'Número inválido';
+                var invalidText = rangeDisplay.dataset.rangeLabel || rangeDisplay.dataset.currentText || rangeDisplay.dataset.defaultText || '';
                 rangeDisplay.textContent = '⚠ ' + invalidText;
                 rangeDisplay.className = 'score-range-display small text-danger mt-1 font-weight-bold';
             }
@@ -2222,7 +2887,6 @@ JS;
 
         var min = parseFloat(input.min);
         var max = parseFloat(input.max);
-
         var outOfRange = false;
 
         if (!outOfRange && !isNaN(min) && value < min) {
@@ -2261,6 +2925,28 @@ JS;
             radio.dataset.silentChange = '1';
             radio.checked = false;
             option.classList.remove('selected');
+            
+            // Forzar que el hover se oculte al deseleccionar
+            var hoverDesc = option.querySelector('.level-hover-description');
+            if (hoverDesc) {
+                // Agregar clase temporal para forzar ocultación
+                option.classList.add('force-hide-hover');
+                hoverDesc.style.opacity = '0';
+                hoverDesc.style.visibility = 'hidden';
+                hoverDesc.style.transform = 'scale(0.98)';
+                
+                // Quitar el mouse de encima disparando blur
+                option.blur();
+                
+                // Limpiar después de la transición
+                setTimeout(function() {
+                    option.classList.remove('force-hide-hover');
+                    hoverDesc.style.opacity = '';
+                    hoverDesc.style.visibility = '';
+                    hoverDesc.style.transform = '';
+                }, 350);
+            }
+            
             resetIndicator(option.dataset.indicatorId);
             radio.dispatchEvent(new Event('change', { bubbles: true }));
             delete radio.dataset.silentChange;
@@ -2273,8 +2959,40 @@ JS;
         delete radio.dataset.silentChange;
     }
 
+    function classifyDescriptionLength(hoverDesc) {
+        if (!hoverDesc) {
+            return;
+        }
+        
+        var content = hoverDesc.querySelector('.hover-content');
+        if (!content) {
+            return;
+        }
+        
+        var textLength = content.textContent.trim().length;
+        
+        // Remover clases previas
+        hoverDesc.classList.remove('text-short', 'text-medium', 'text-long', 'text-very-long');
+        
+        // Aplicar clase basada en longitud
+        if (textLength < 100) {
+            hoverDesc.classList.add('text-short');
+        } else if (textLength < 200) {
+            hoverDesc.classList.add('text-medium');
+        } else if (textLength < 350) {
+            hoverDesc.classList.add('text-long');
+        } else {
+            hoverDesc.classList.add('text-very-long');
+        }
+    }
+
     function bind(root) {
         root = root || document;
+
+        // Clasificar todas las descripciones por longitud de texto
+        root.querySelectorAll('.gradingform_utbrubrics .level-hover-description').forEach(function(hoverDesc) {
+            classifyDescriptionLength(hoverDesc);
+        });
 
         root.querySelectorAll('.gradingform_utbrubrics .performance-levels .level-option').forEach(function(option) {
             if (option.dataset.utbCardsBound) {
@@ -2345,15 +3063,13 @@ JS;
             }
 
             input.dataset.utbCardsBound = '1';
-            
-            // Prevent negative numbers by blocking the minus key
+
             input.addEventListener('keydown', function(e) {
                 if (e.key === '-' || e.key === 'Minus') {
                     e.preventDefault();
                 }
             });
-            
-            // Multiple event listeners for real-time validation
+
             input.addEventListener('input', function() {
                 validateScoreInput(input);
             });
@@ -2368,8 +3084,7 @@ JS;
                     validateScoreInput(input);
                 }, 10);
             });
-            
-            // Initial validation
+
             validateScoreInput(input);
         });
     }
@@ -2528,10 +3243,14 @@ JS;
         }
 
         $out = html_writer::start_div('grading-controls', ['data-indicator-id' => $indicator_id]);
-
+        
+        // Crear layout de dos columnas
+        $out .= html_writer::start_div('grading-row');
+        
+        // Columna izquierda: Calificación
+        $out .= html_writer::start_div('grading-col grading-col-score');
         $out .= html_writer::tag('label', get_string('grade_label', 'gradingform_utbrubrics'), ['class' => 'form-label small mb-1']);
         $out .= html_writer::empty_tag('input', $score_attrs);
-
         $out .= html_writer::div(
             $range_text,
             'score-range-display small text-muted mt-1',
@@ -2541,14 +3260,20 @@ JS;
                 'data-range-label' => $range ? $range_text : ''
             ]
         );
-
-        $out .= html_writer::tag('label', get_string('feedback_label', 'gradingform_utbrubrics'), ['class' => 'form-label small mt-3 mb-1']);
+        $out .= html_writer::end_div(); // grading-col-score
+        
+        // Columna derecha: Retroalimentación
+        $out .= html_writer::start_div('grading-col grading-col-feedback');
+        $out .= html_writer::tag('label', get_string('feedback_label', 'gradingform_utbrubrics'), ['class' => 'form-label small mb-1']);
         $out .= html_writer::tag('textarea', s($current_feedback), [
             'name' => $elementname . '[criteria][' . $indicator_id . '][feedback]',
             'class' => 'form-control feedback-input noeditor',
             'rows' => '4',
             'placeholder' => get_string('indicator_feedback_placeholder', 'gradingform_utbrubrics')
         ]);
+        $out .= html_writer::end_div(); // grading-col-feedback
+        
+        $out .= html_writer::end_div(); // grading-row
 
         $out .= html_writer::empty_tag('input', [
             'type' => 'hidden',

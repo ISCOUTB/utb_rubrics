@@ -218,50 +218,70 @@ jobs:
     - name: Generar notas de release
       id: release_notes
       run: |
-        cat << 'EOF' > release_notes.md
-        # Plugin UTB Rubrics Versión ${{ steps.get_version.outputs.VERSION_NUMBER }}
-        
-        ## Instrucciones de Instalación
-        
-        ### 🎯 Problemas Solucionados en esta Versión
-        
-        ✅ **Error "version.php no encontrado"**: Estructura corregida y probada  
-        ✅ **Problemas de instalación**: Formato optimizado y verificado que funciona  
-        ✅ **Compatibilidad**: Estructura compatible con Moodle
-        
-        ### 🚀 Instalación
-        1. **Descarga**: `moodle-gradingform_utbrubrics-${{ steps.get_version.outputs.VERSION_NUMBER }}.zip`
-        2. **Inicia sesión** en tu sitio Moodle como administrador
-        3. **Navega a**: Administración del sitio > Plugins > Instalar plugins
-        4. **Sube** el archivo ZIP
-        5. **Tipo de extensión**: Selecciona **"Método de calificación avanzado"**
-        6. **Haz clic** en "Instalar plugin desde archivo ZIP"
-        7. **Sigue** las instrucciones de instalación
-        
-        ### 🔧 Instalación Manual (Alternativa)
-        1. Descarga y extrae el archivo ZIP
-        2. Copia el directorio `utbrubrics/` a: `/[tu-moodle]/grade/grading/form/utbrubrics/`
-        3. Visita **Administración del sitio > Notificaciones** para completar la instalación
-        
-        ## Requisitos
-        - **Moodle**: 3.11 o superior
-        - **PHP**: 7.4 a 8.2
-        - **Base de datos**: MySQL 5.7+, PostgreSQL 10+, o MariaDB 10.3+
+        set -euo pipefail
 
+        VERSION_NUMBER="${{ steps.get_version.outputs.VERSION_NUMBER }}"
+        TAG="${{ steps.get_version.outputs.VERSION }}"
+        ZIPNAME="moodle-gradingform_utbrubrics-${VERSION_NUMBER}.zip"
 
-        ## 🏛️ Desarrollado por
-        - Isaac David Sánchez Sánchez - Desarrollador Líder
-        - Santiago Andrés Orejula Cueter - Desarrollador
-        - Luis Mario Diaz Martinez - Desarrollador
-        - Maria Valentina Serna Gonzalez - Desarrolladora
-        
-        ## 📞 Soporte
-        Si encuentras algún problema, por favor repórtalo en nuestra página de [GitHub Issues](https://github.com/${{ github.repository }}/issues).
-        
-        ---
-        
-        **Paquete de Instalación**: Este archivo ZIP contiene el plugin completo con la estructura de directorio correcta para el sistema de instalación automática de Moodle.
-        EOF
+        CHANGELOG_SECTION=""
+
+        if [ -f CHANGELOG.md ]; then
+          CHANGELOG_SECTION=$(awk -v ver="${VERSION_NUMBER}" '
+            /^## \[/{
+              if(in_section) exit
+              if(index($0, "[" ver "]")) {
+                in_section=1
+                sub(/^##[[:space:]]*/, "", $0)
+                print $0
+                next
+              }
+            }
+            in_section { print }
+          ' CHANGELOG.md || true)
+        fi
+
+        if [ -z "$CHANGELOG_SECTION" ]; then
+          git fetch --tags --quiet || true
+          PREV_TAG=$(git tag --sort=-creatordate | grep -v "^${TAG}$" | head -n1 || true)
+          if [ -n "$PREV_TAG" ]; then
+            RANGE="$PREV_TAG..$TAG"
+          else
+            RANGE="$TAG"
+          fi
+          CHANGELOG_SECTION=$(git --no-pager log --pretty=format:"- %h %s (%an)" "$RANGE" || true)
+        fi
+
+        if [ -z "$CHANGELOG_SECTION" ]; then
+          CHANGELOG_SECTION="- (sin cambios registrados)"
+        fi
+
+        {
+          echo "# Plugin UTB Rubrics Versión ${VERSION_NUMBER}"
+          echo ""
+          echo "## Cambios en esta versión"
+          printf "%s\n" "$CHANGELOG_SECTION"
+          echo ""
+          echo "## Instalación"
+          echo "1. Descarga:"
+          echo "   - ${ZIPNAME}"
+          echo "2. Inicia sesión en tu sitio Moodle como administrador"
+          echo "3. Navega a: Administración del sitio > Plugins > Instalar plugins"
+          echo "4. Sube el archivo ZIP"
+          echo "5. Tipo de extensión: Selecciona \"Método de calificación avanzado\""
+          echo "6. Haz clic en \"Instalar plugin desde archivo ZIP\""
+          echo "7. Sigue las instrucciones de instalación"
+          echo ""
+          echo "## Requisitos"
+          echo "- Moodle: 3.11 o superior"
+          echo "- PHP: 7.4 a 8.2"
+          echo "- Base de datos: MySQL 5.7+, PostgreSQL 10+, o MariaDB 10.3+"
+          echo ""
+          echo "## Soporte"
+          echo "Si encuentras algún problema, por favor repórtalo en nuestra página de GitHub Issues: https://github.com/${{ github.repository }}/issues"
+          echo ""
+          echo "Paquete de instalación: Este archivo ZIP contiene el plugin completo con la estructura de directorio correcta para el sistema de instalación automática de Moodle."
+        } > release_notes.md
 
     - name: Crear Release en GitHub
       uses: softprops/action-gh-release@v1

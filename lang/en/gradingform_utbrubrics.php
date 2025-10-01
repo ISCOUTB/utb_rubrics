@@ -66,3 +66,7 @@ $string['performance_levels_descriptions'] = 'Performance Levels & Descriptions'
 $string['grade_label'] = 'Grade:';
 $string['feedback_label'] = 'Feedback:';
 $string['teacher_feedback'] = 'Teacher Feedback:';
+$string['instructor_evaluation_hint'] = 'Choose a performance level for each indicator. Hover a card to preview its description and select it to unlock grading and feedback.';
+$string['indicator_hover_helper'] = 'Hover each performance level to preview the description. Selecting one will display the full detail below.';
+$string['indicator_select_prompt'] = 'Select a performance level to reveal its description here.';
+$string['indicator_selected_heading'] = 'Selected level insight';

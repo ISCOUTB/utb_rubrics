@@ -66,3 +66,7 @@ $string['performance_levels_descriptions'] = 'Niveles de Desempeño y Descripcio
 $string['grade_label'] = 'Calificación:';
 $string['feedback_label'] = 'Retroalimentación:';
 $string['teacher_feedback'] = 'Retroalimentación del Profesor:';
+$string['instructor_evaluation_hint'] = 'Selecciona un nivel de desempeño para cada indicador. Pasa el cursor sobre cada tarjeta para previsualizar su descripción y selecciónala para habilitar la calificación y la retroalimentación.';
+$string['indicator_hover_helper'] = 'Pasa el cursor por cada nivel de desempeño para ver la descripción. Al seleccionar uno, verás el detalle completo debajo.';
+$string['indicator_select_prompt'] = 'Selecciona un nivel de desempeño para mostrar su descripción aquí.';
+$string['indicator_selected_heading'] = 'Detalle del nivel seleccionado';
