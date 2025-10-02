@@ -273,7 +273,7 @@ jobs:
           echo "7. Sigue las instrucciones de instalación"
           echo ""
           echo "## Requisitos"
-          echo "- Moodle: 3.11 o superior"
+          echo "- Moodle: 4.0 o superior"
           echo "- PHP: 7.4 a 8.2"
           echo "- Base de datos: MySQL 5.7+, PostgreSQL 10+, o MariaDB 10.3+"
           echo ""
