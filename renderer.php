@@ -87,6 +87,14 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
         }
 
         $out = html_writer::start_div('gradingform_utbrubrics');
+
+        if ($this->is_grading_mode($mode)) {
+            $out .= html_writer::empty_tag('input', [
+                'type' => 'hidden',
+                'name' => $elementname . '[submissionflag]',
+                'value' => 1
+            ]);
+        }
         
         // Add comprehensive CSS for better styling
         $out .= html_writer::tag('style', '
@@ -2607,10 +2615,10 @@ JS;
                 }
                 $cardbody .= html_writer::end_div();
                 if ($leveldescription !== '') {
-                    $cardbody .= html_writer::div(
+                    $cardbody .= html_writer::tag(
+                        'div',
                         html_writer::div($leveldescription, 'hover-content'),
-                        'level-hover-description',
-                        ['aria-hidden' => 'true']
+                        ['class' => 'level-hover-description', 'aria-hidden' => 'true']
                     );
                     $cardbody .= html_writer::span(trim(strip_tags($leveldescription)), 'visually-hidden level-description-text');
                 }
@@ -2678,6 +2686,9 @@ JS;
             scoreInput.disabled = true;
             scoreInput.removeAttribute('min');
             scoreInput.removeAttribute('max');
+            scoreInput.placeholder = '';
+            scoreInput.removeAttribute('placeholder');
+            scoreInput.removeAttribute('title');
             scoreInput.classList.remove('is-valid', 'is-invalid');
         }
 
@@ -2755,6 +2766,18 @@ JS;
             }
             if (!isNaN(max)) {
                 scoreInput.max = max;
+            }
+
+            if (!isNaN(min) && !isNaN(max)) {
+                scoreInput.placeholder = min.toFixed(2) + ' - ' + max.toFixed(2);
+                if (rangeLabel) {
+                    scoreInput.title = rangeLabel;
+                } else {
+                    scoreInput.removeAttribute('title');
+                }
+            } else {
+                scoreInput.placeholder = '';
+                scoreInput.removeAttribute('title');
             }
 
             // Auto-llenar con la nota máxima del nivel si el campo está vacío

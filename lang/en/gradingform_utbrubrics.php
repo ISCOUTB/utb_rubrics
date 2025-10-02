@@ -15,6 +15,7 @@ $string['indicators'] = 'Indicators';
 $string['performancelevel'] = 'Performance Level';
 $string['performancelevels'] = 'Performance Levels';
 $string['indicatornotgraded'] = 'Your teacher has not graded this indicator yet.';
+$string['validationerror'] = 'Select a performance level and enter a valid score for every indicator before saving.';
 
 // Performance level definitions
 $string['excellent'] = 'Excellent (4.5-5.0)';

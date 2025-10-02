@@ -15,6 +15,7 @@ $string['indicators'] = 'Indicadores';
 $string['performancelevel'] = 'Nivel de Desempeño';
 $string['performancelevels'] = 'Niveles de Desempeño';
 $string['indicatornotgraded'] = 'Su profesor aún no ha calificado este indicador.';
+$string['validationerror'] = 'Debes seleccionar un nivel de desempeño y una calificación válida para cada indicador antes de guardar.';
 
 // Definiciones de niveles de desempeño
 $string['excellent'] = 'Excelente (4.5-5.0)';

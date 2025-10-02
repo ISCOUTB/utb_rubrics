@@ -555,28 +555,48 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
      */
     public function is_empty_form($elementvalue) {
         $definition = $this->get_controller()->get_definition();
-        if (empty($elementvalue['criteria']) || !is_array($elementvalue['criteria'])) {
+        $structure = $definition->utbrubric['criteria'] ?? [];
+
+        if (empty($structure)) {
             return true;
         }
 
-        $criteria = $definition->utbrubric['criteria'] ?? [];
-        foreach ($criteria as $indicator) {
+        $criteriavalue = [];
+        if (!empty($elementvalue['criteria']) && is_array($elementvalue['criteria'])) {
+            $criteriavalue = $elementvalue['criteria'];
+        }
+
+        $hasinput = false;
+        foreach ($structure as $indicator) {
             if (!is_array($indicator) || !isset($indicator['id'])) {
                 continue;
             }
+
             $indicatorid = (string)$indicator['id'];
-            $criteriondata = $elementvalue['criteria'][$indicatorid] ?? [];
+            $criteriondata = $criteriavalue[$indicatorid] ?? [];
+            if (!is_array($criteriondata)) {
+                $criteriondata = [];
+            }
 
             $haslevel = isset($criteriondata['performance_level_id']) && $criteriondata['performance_level_id'] !== '' && $criteriondata['performance_level_id'] !== null;
             $hasscore = array_key_exists('score', $criteriondata) && trim((string)$criteriondata['score']) !== '';
             $hasfeedback = array_key_exists('feedback', $criteriondata) && trim((string)$criteriondata['feedback']) !== '';
 
             if ($haslevel || $hasscore || $hasfeedback) {
-                return false;
+                $hasinput = true;
+                break;
             }
         }
 
-        return true;
+        if ($hasinput) {
+            return false;
+        }
+
+        if (!empty($elementvalue['submissionflag'])) {
+            return false;
+        }
+
+        return empty($criteriavalue);
     }
 
     /**
@@ -597,52 +617,69 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
      */
     public function validate_grading_element($elementvalue) {
         $definition = $this->get_controller()->get_definition();
-        if (empty($elementvalue['criteria']) || !is_array($elementvalue['criteria'])) { 
-            return false; 
+        $structure = $definition->utbrubric['criteria'] ?? [];
+
+        if (empty($structure)) {
+            return false;
         }
-        
-        $ok = true;
-        if ($definition->utbrubric && is_array($definition->utbrubric) && isset($definition->utbrubric['criteria'])) {
-            foreach ($definition->utbrubric['criteria'] as $indicator) {
-                $indicator_id = $indicator['id'];
-                
-                // Check if indicator is evaluated
-                if (!isset($elementvalue['criteria'][$indicator_id])) {
-                    continue; // Skip non-evaluated indicators
-                }
-                
-                $criterion = $elementvalue['criteria'][$indicator_id];
-                
-                // Validate performance level
-                if (isset($criterion['performance_level_id'])) {
-                    $perf_level_id = $criterion['performance_level_id'];
-                    $valid_level = false;
-                    
-                    foreach ($indicator['levels'] as $level) {
-                        if ($level['id'] == $perf_level_id) {
-                            $valid_level = true;
-                            // Validate score is within range
-                            if (isset($criterion['score'])) {
-                                $score = (float)$criterion['score'];
-                                $min = (float)$level['min'];
-                                $max = (float)$level['max'];
-                                if ($score < $min || $score > $max) {
-                                    $ok = false;
-                                    break 2; // Break all loops
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    
-                    if (!$valid_level) {
-                        $ok = false;
-                        break; // Break outer loop
+
+        if (empty($elementvalue['criteria']) || !is_array($elementvalue['criteria'])) {
+            return false;
+        }
+
+        foreach ($structure as $indicator) {
+            if (!is_array($indicator) || !isset($indicator['id'])) {
+                continue;
+            }
+
+            $indicatorid = (string)$indicator['id'];
+            $criterion = $elementvalue['criteria'][$indicatorid] ?? null;
+
+            if (!is_array($criterion)) {
+                return false;
+            }
+
+            $levelid = $criterion['performance_level_id'] ?? null;
+            if ($levelid === null || $levelid === '') {
+                return false;
+            }
+
+            $levelinfo = null;
+            if (!empty($indicator['levels']) && is_array($indicator['levels'])) {
+                foreach ($indicator['levels'] as $candidate) {
+                    if ((string)($candidate['id'] ?? '') === (string)$levelid) {
+                        $levelinfo = $candidate;
+                        break;
                     }
                 }
             }
+
+            if (empty($levelinfo)) {
+                return false;
+            }
+
+            if (!array_key_exists('score', $criterion) || trim((string)$criterion['score']) === '') {
+                return false;
+            }
+
+            $score = unformat_float($criterion['score']);
+            if (!is_numeric($score)) {
+                return false;
+            }
+
+            $min = isset($levelinfo['min']) ? (float)$levelinfo['min'] : null;
+            $max = isset($levelinfo['max']) ? (float)$levelinfo['max'] : null;
+
+            if (($min !== null && $score < $min) || ($max !== null && $score > $max)) {
+                return false;
+            }
         }
-        return $ok;
+
+        return true;
+    }
+
+    public function default_validation_error_message() {
+        return get_string('validationerror', 'gradingform_utbrubrics');
     }
 
     /**
@@ -651,10 +688,18 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
     public function update($data) {
         global $DB;
 
+        $criteriadata = isset($data['criteria']) && is_array($data['criteria']) ? $data['criteria'] : [];
+        $validationpayload = ['criteria' => $criteriadata];
+        if (isset($data['submissionflag'])) {
+            $validationpayload['submissionflag'] = $data['submissionflag'];
+        }
+
+        if (!$this->is_empty_form($validationpayload) && !$this->validate_grading_element($validationpayload)) {
+            throw new moodle_exception('validationerror', 'gradingform_utbrubrics');
+        }
+
         $current = $this->get_utbrubrics_filling();
         parent::update($data);
-
-        $criteriadata = isset($data['criteria']) && is_array($data['criteria']) ? $data['criteria'] : [];
 
         // Get context information for evaluations.
         $contextinfo = $this->get_evaluation_context_info();
