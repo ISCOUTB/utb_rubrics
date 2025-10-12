@@ -896,8 +896,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .performance-levels.modern-levels {
                 display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 18px;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 14px;
                 width: 100%;
                 justify-items: stretch;
                 align-items: stretch;
@@ -914,15 +914,44 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-3,
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
 
-            @media (max-width: 960px) {
+            @media (min-width: 1600px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-3 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                }
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 1599px) and (min-width: 1200px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 1199px) and (min-width: 960px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+
+            @media (max-width: 959px) {
                 .gradingform_utbrubrics .performance-levels.modern-levels {
                     grid-template-columns: 1fr;
                 }
@@ -933,6 +962,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 width: 100%;
                 min-width: 0;
                 height: 100%;
+                overflow: hidden;
+                border-radius: 16px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
@@ -940,11 +971,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border: 1px solid rgba(8, 35, 64, 0.1) !important;
                 box-shadow: 0 12px 32px rgba(15, 45, 61, 0.12) !important;
                 overflow: hidden;
-                min-height: 170px;
+                min-height: 140px;
                 height: 100%;
                 position: relative;
                 display: flex;
                 flex-direction: column;
+                transition: all 0.25s ease;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card .card-body {
@@ -953,6 +985,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 padding: 0 !important;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
+                border-radius: 16px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card:after {
@@ -962,6 +996,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 background: linear-gradient(140deg, rgba(3, 127, 127, 0.08), rgba(5, 160, 160, 0));
                 opacity: 0;
                 transition: opacity 0.25s ease;
+                border-radius: 16px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .card:after,
@@ -975,130 +1010,94 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 height: 100%;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
             }
 
             .gradingform_utbrubrics .modern-level-main {
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
+                gap: 10px;
                 align-items: center;
                 justify-content: center;
                 width: 100%;
-                min-height: 180px;
-                padding: 32px 24px;
+                min-height: 140px;
+                padding: 20px 16px;
                 flex: 1;
                 text-align: center;
+                overflow: hidden;
             }
 
             .gradingform_utbrubrics .modern-level-name {
                 font-weight: 700;
-                font-size: 1.25rem;
+                font-size: 1.1rem;
                 color: #0f2d3d;
                 text-align: center;
                 line-height: 1.3;
                 letter-spacing: -0.02em;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
             }
 
             .gradingform_utbrubrics .modern-level-range {
-                font-size: 0.90rem;
-                letter-spacing: 0.1em;
+                font-size: 0.85rem;
+                letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: #5f7a86;
                 font-weight: 500;
                 text-align: center;
-            }
-
-            .gradingform_utbrubrics .level-hover-description {
-                position: absolute;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 24px 20px;
-                background: linear-gradient(145deg, rgba(3, 100, 100, 0.96), rgba(5, 127, 127, 0.94));
-                color: #ffffff;
-                text-align: center;
-                opacity: 0;
-                transform: scale(0.98);
-                transition: opacity 0.3s ease, transform 0.3s ease;
-                pointer-events: none;
-                border-radius: 16px;
-                visibility: hidden;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            .gradingform_utbrubrics .level-hover-description .hover-content {
-                font-size: 1rem;
-                line-height: 1.65;
-                font-weight: 400;
-                max-width: 100%;
-                width: 100%;
-                overflow-wrap: break-word;
                 word-wrap: break-word;
+                overflow-wrap: break-word;
+                width: 100%;
             }
 
-            /* Tamaños adaptativos basados en longitud del texto */
-            .gradingform_utbrubrics .level-hover-description.text-short .hover-content {
-                font-size: 1rem;
-                line-height: 1.65;
+            /* Hover effect on cards - simple border highlight */
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .card {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
             }
-
-            .gradingform_utbrubrics .level-hover-description.text-medium .hover-content {
-                font-size: 0.92rem;
-                line-height: 1.5;
+            
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:focus-within .card {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
             }
-
-            .gradingform_utbrubrics .level-hover-description.text-long .hover-content {
-                font-size: 0.85rem;
-                line-height: 1.4;
-                padding: 2px 0;
+            
+            /* Colores por tipo de nivel - solo cuando está seleccionado */
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-excellent .card { 
+                background-color: #d4edda !important; 
+                border-color: #28a745 !important;
+                border-width: 2px !important;
+                box-shadow: 0 3px 6px rgba(40,167,69,0.25) !important;
+                transform: translateY(-1px) !important;
             }
-
-            .gradingform_utbrubrics .level-hover-description.text-very-long .hover-content {
-                font-size: 0.78rem;
-                line-height: 1.35;
-                padding: 4px 0;
+            
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-good .card { 
+                background-color: #cce7ff !important; 
+                border-color: #007bff !important;
+                border-width: 2px !important;
+                box-shadow: 0 3px 6px rgba(0,123,255,0.25) !important;
+                transform: translateY(-1px) !important;
             }
-
-            /* Scrollbar sutil para textos muy largos */
-            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar {
-                width: 5px;
+            
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-fair .card { 
+                background-color: #fff3cd !important; 
+                border-color: #ffc107 !important;
+                border-width: 2px !important;
+                box-shadow: 0 3px 6px rgba(255,193,7,0.25) !important;
+                transform: translateY(-1px) !important;
             }
-
-            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 3px;
-            }
-
-            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 3px;
-            }
-
-            .gradingform_utbrubrics .level-hover-description::-webkit-scrollbar-thumb:hover {
-                background: rgba(255, 255, 255, 0.5);
-            }
-
-            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .level-hover-description,
-            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:focus-within .level-hover-description {
-                opacity: 1;
-                transform: scale(1);
-                visibility: visible;
-            }
-
-            .gradingform_utbrubrics .performance-levels.modern-levels .level-option:not(:hover):not(:focus-within) .level-hover-description {
-                opacity: 0;
-                transform: scale(0.98);
-                visibility: hidden;
-            }
-
-            /* Forzar ocultación cuando se deselecciona - mayor especificidad */
-            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.force-hide-hover .level-hover-description {
-                opacity: 0 !important;
-                visibility: hidden !important;
-                transform: scale(0.98) !important;
-                pointer-events: none !important;
+            
+            .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-inadequate .card { 
+                background-color: #f8d7da !important; 
+                border-color: #dc3545 !important;
+                border-width: 2px !important;
+                box-shadow: 0 3px 6px rgba(220,53,69,0.25) !important;
+                transform: translateY(-1px) !important;
             }
 
             .gradingform_utbrubrics .selected-level-chip {
@@ -1120,6 +1119,13 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border-radius: 16px;
                 border: 1px solid rgba(5, 160, 160, 0.12);
                 box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+                transition: all 0.3s ease;
+            }
+            
+            .gradingform_utbrubrics .indicator-insight.hovering {
+                background: rgba(5, 160, 160, 0.12);
+                border-color: rgba(5, 160, 160, 0.25);
+                box-shadow: 0 4px 12px rgba(5, 160, 160, 0.15);
             }
 
             .gradingform_utbrubrics .indicator-insight .insight-title {
@@ -1129,6 +1135,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 color: #056b6b;
                 margin-bottom: 14px;
                 font-weight: 700;
+                transition: all 0.3s ease;
+            }
+            
+            .gradingform_utbrubrics .indicator-insight.hovering .insight-title {
+                color: #037f7f;
+                font-size: 0.75rem;
             }
 
             .gradingform_utbrubrics .selected-level-description {
@@ -1136,10 +1148,18 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 line-height: 1.6;
                 color: #0f2d3d;
                 min-height: 56px;
+                transition: all 0.3s ease;
             }
 
             .gradingform_utbrubrics .selected-level-description:not(.has-selection) {
                 color: #5f7583;
+                font-style: italic;
+            }
+            
+            .gradingform_utbrubrics .selected-level-description.preview-mode {
+                color: #037f7f;
+                font-weight: 500;
+                font-style: normal;
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-grading {
@@ -1241,6 +1261,56 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
                 .gradingform_utbrubrics .indicator-card .grading-controls {
                     padding: 18px;
+                }
+                
+                .gradingform_utbrubrics .modern-level-name {
+                    font-size: 1rem;
+                }
+                
+                .gradingform_utbrubrics .modern-level-range {
+                    font-size: 0.8rem;
+                }
+            }
+            
+            /* Optimizaciones para resoluciones 1080p (Full HD) y menores */
+            @media (max-width: 1920px) {
+                .gradingform_utbrubrics .modern-level-main {
+                    padding: 16px 12px;
+                    min-height: 130px;
+                    gap: 8px;
+                }
+                
+                .gradingform_utbrubrics .modern-level-name {
+                    font-size: 1.05rem;
+                }
+                
+                .gradingform_utbrubrics .modern-level-range {
+                    font-size: 0.82rem;
+                    letter-spacing: 0.06em;
+                }
+                
+                .gradingform_utbrubrics .level-hover-description {
+                    padding: 16px 14px;
+                }
+            }
+            
+            /* Optimizaciones adicionales para 1440p y menores */
+            @media (max-width: 1440px) {
+                .gradingform_utbrubrics .modern-level-main {
+                    padding: 14px 10px;
+                    min-height: 120px;
+                }
+                
+                .gradingform_utbrubrics .modern-level-name {
+                    font-size: 1rem;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    gap: 12px;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
+                    min-height: 120px;
                 }
             }
         ');
@@ -1485,8 +1555,17 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             $meta = html_writer::div($chip . $rangepill, 'selected-level-meta');
 
+            $default_title = get_string('indicator_selected_heading', 'gradingform_utbrubrics');
             $summary = html_writer::start_div('indicator-summary indicator-insight');
-            $summary .= html_writer::div(get_string('indicator_selected_heading', 'gradingform_utbrubrics'), 'insight-title text-uppercase');
+            $summary .= html_writer::div(
+                $default_title, 
+                'insight-title text-uppercase',
+                [
+                    'data-default-title' => $default_title,
+                    'data-preview-text' => get_string('indicator_previewing_heading', 'gradingform_utbrubrics'),
+                    'data-confirmed-text' => get_string('indicator_confirmed_heading', 'gradingform_utbrubrics')
+                ]
+            );
             $summary .= $meta;
             $summary .= html_writer::tag('div', $description_content, [
                 'class' => $description_classes,
@@ -1511,10 +1590,10 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             $out .= $levels_html;
 
             $out .= html_writer::start_div('indicator-side');
+            $out .= $summary;
             if ($grade_html !== '') {
                 $out .= html_writer::div($grade_html, 'indicator-grading');
             }
-            $out .= $summary;
             $out .= html_writer::end_div();
 
             $out .= html_writer::end_div();
@@ -2613,17 +2692,9 @@ JS;
                 if ($rangetext !== '') {
                     $cardbody .= html_writer::div($rangetext, 'modern-level-range');
                 }
-                $cardbody .= html_writer::end_div();
-                if ($leveldescription !== '') {
-                    $cardbody .= html_writer::tag(
-                        'div',
-                        html_writer::div($leveldescription, 'hover-content'),
-                        ['class' => 'level-hover-description', 'aria-hidden' => 'true']
-                    );
-                    $cardbody .= html_writer::span(trim(strip_tags($leveldescription)), 'visually-hidden level-description-text');
-                }
-                $cardbody .= html_writer::end_div();
-                $cardbody .= html_writer::end_div();
+                $cardbody .= html_writer::end_div(); // modern-level-main
+                $cardbody .= html_writer::end_div(); // modern-level-card
+                $cardbody .= html_writer::end_div(); // card-body
                 $cardcontent = html_writer::div($cardbody, 'card level-card h-100');
             } else {
                 $cardbody = html_writer::start_div('card-body p-3');
@@ -2677,9 +2748,11 @@ JS;
         var controls = row.querySelector('.grading-controls');
         var scoreInput = controls ? controls.querySelector('.score-input') : null;
         var rangeDisplay = controls ? controls.querySelector('.score-range-display') : null;
+        var insight = row.querySelector('.indicator-insight');
         var descriptionPane = row.querySelector('.selected-level-description');
         var levelChip = row.querySelector('.selected-level-chip');
         var rangePill = row.querySelector('.selected-level-range');
+        var insightTitle = insight ? insight.querySelector('.insight-title') : null;
 
         if (scoreInput) {
             scoreInput.value = '';
@@ -2703,17 +2776,62 @@ JS;
         if (descriptionPane) {
             var defaultMessage = descriptionPane.dataset.defaultMessage || '';
             descriptionPane.textContent = defaultMessage;
-            descriptionPane.classList.remove('has-selection');
+            descriptionPane.classList.remove('has-selection', 'preview-mode');
+            // Limpiar datos temporales de hover
+            delete descriptionPane.dataset.originalContent;
+            delete descriptionPane.dataset.originalHasSelection;
         }
 
         if (levelChip) {
             levelChip.textContent = levelChip.dataset.placeholder || '';
             levelChip.classList.add('d-none');
+            // Limpiar datos temporales de hover
+            delete levelChip.dataset.originalContent;
+            delete levelChip.dataset.originalHidden;
         }
 
         if (rangePill) {
             rangePill.textContent = rangePill.dataset.placeholder || '';
             rangePill.classList.add('d-none');
+            // Limpiar datos temporales de hover
+            delete rangePill.dataset.originalContent;
+            delete rangePill.dataset.originalHidden;
+        }
+        
+        if (insightTitle) {
+            // Restaurar título original (el default, no el de confirmed)
+            var originalTitle = insightTitle.getAttribute('data-original-title');
+            if (!originalTitle) {
+                // Si no existe, obtenerlo del texto actual (asumiendo que es el título default)
+                // Pero si tiene data-confirmed-text o data-preview-text, debemos usar el texto base
+                var textContent = insightTitle.textContent;
+                var confirmedText = insightTitle.dataset.confirmedText;
+                var previewText = insightTitle.dataset.previewText;
+                
+                // Si el texto actual es uno de los especiales, no lo guardamos
+                if (textContent !== confirmedText && textContent !== previewText) {
+                    originalTitle = textContent;
+                } else {
+                    // Necesitamos obtener el título default de alguna manera
+                    // Por ahora, usaremos el primero que no sea confirmed o preview
+                    originalTitle = insightTitle.textContent;
+                }
+            }
+            
+            // Limpiar datos temporales de hover del título
+            delete insightTitle.dataset.originalText;
+            
+            // Restaurar al título default original (guardado en PHP)
+            // Necesitamos guardarlo en el elemento para poder restaurarlo
+            var defaultTitle = insightTitle.dataset.defaultTitle;
+            if (defaultTitle) {
+                insightTitle.textContent = defaultTitle;
+            }
+        }
+        
+        if (insight) {
+            // Remover clase de hover si está presente
+            insight.classList.remove('hovering');
         }
     }
 
@@ -2844,6 +2962,12 @@ JS;
                 rangePill.classList.add('d-none');
             }
         }
+        
+        // Actualizar el título del insight a "Has seleccionado:" cuando se confirma una selección
+        var insightTitle = row.querySelector('.insight-title');
+        if (insightTitle && insightTitle.dataset.confirmedText) {
+            insightTitle.textContent = insightTitle.dataset.confirmedText;
+        }
 
         validateScoreInput(scoreInput);
     }
@@ -2949,27 +3073,6 @@ JS;
             radio.checked = false;
             option.classList.remove('selected');
             
-            // Forzar que el hover se oculte al deseleccionar
-            var hoverDesc = option.querySelector('.level-hover-description');
-            if (hoverDesc) {
-                // Agregar clase temporal para forzar ocultación
-                option.classList.add('force-hide-hover');
-                hoverDesc.style.opacity = '0';
-                hoverDesc.style.visibility = 'hidden';
-                hoverDesc.style.transform = 'scale(0.98)';
-                
-                // Quitar el mouse de encima disparando blur
-                option.blur();
-                
-                // Limpiar después de la transición
-                setTimeout(function() {
-                    option.classList.remove('force-hide-hover');
-                    hoverDesc.style.opacity = '';
-                    hoverDesc.style.visibility = '';
-                    hoverDesc.style.transform = '';
-                }, 350);
-            }
-            
             resetIndicator(option.dataset.indicatorId);
             radio.dispatchEvent(new Event('change', { bubbles: true }));
             delete radio.dataset.silentChange;
@@ -2978,51 +3081,194 @@ JS;
 
         radio.dataset.silentChange = '1';
         applySelection(option, focusScore);
+        
+        // Limpiar datos temporales de hover después de seleccionar
+        var indicatorId = option.dataset.indicatorId;
+        var row = findIndicatorRow(indicatorId);
+        if (row) {
+            var insight = row.querySelector('.indicator-insight');
+            var descriptionPane = row.querySelector('.selected-level-description');
+            var levelChip = row.querySelector('.selected-level-chip');
+            var rangePill = row.querySelector('.selected-level-range');
+            var insightTitle = insight ? insight.querySelector('.insight-title') : null;
+            
+            if (descriptionPane) {
+                delete descriptionPane.dataset.originalContent;
+                delete descriptionPane.dataset.originalHasSelection;
+                descriptionPane.classList.remove('preview-mode');
+            }
+            
+            if (levelChip) {
+                delete levelChip.dataset.originalContent;
+                delete levelChip.dataset.originalHidden;
+            }
+            
+            if (rangePill) {
+                delete rangePill.dataset.originalContent;
+                delete rangePill.dataset.originalHidden;
+            }
+            
+            if (insightTitle && insightTitle.dataset.originalText !== undefined) {
+                delete insightTitle.dataset.originalText;
+            }
+        }
+        
         radio.dispatchEvent(new Event('change', { bubbles: true }));
         delete radio.dataset.silentChange;
-    }
-
-    function classifyDescriptionLength(hoverDesc) {
-        if (!hoverDesc) {
-            return;
-        }
-        
-        var content = hoverDesc.querySelector('.hover-content');
-        if (!content) {
-            return;
-        }
-        
-        var textLength = content.textContent.trim().length;
-        
-        // Remover clases previas
-        hoverDesc.classList.remove('text-short', 'text-medium', 'text-long', 'text-very-long');
-        
-        // Aplicar clase basada en longitud
-        if (textLength < 100) {
-            hoverDesc.classList.add('text-short');
-        } else if (textLength < 200) {
-            hoverDesc.classList.add('text-medium');
-        } else if (textLength < 350) {
-            hoverDesc.classList.add('text-long');
-        } else {
-            hoverDesc.classList.add('text-very-long');
-        }
     }
 
     function bind(root) {
         root = root || document;
 
-        // Clasificar todas las descripciones por longitud de texto
-        root.querySelectorAll('.gradingform_utbrubrics .level-hover-description').forEach(function(hoverDesc) {
-            classifyDescriptionLength(hoverDesc);
-        });
-
+        // Manejar hover sobre cards para actualizar el insight
         root.querySelectorAll('.gradingform_utbrubrics .performance-levels .level-option').forEach(function(option) {
             if (option.dataset.utbCardsBound) {
                 return;
             }
             option.dataset.utbCardsBound = '1';
+            
+            var indicatorId = option.dataset.indicatorId;
+            var levelDescription = option.dataset.levelDescription || '';
+            var levelName = option.dataset.levelName || '';
+            var rangeLabel = option.dataset.rangeLabel || '';
+            
+            // Evento mouseenter - mostrar descripción en el insight
+            option.addEventListener('mouseenter', function() {
+                if (option.dataset.readonly === '1') {
+                    return;
+                }
+                
+                var row = findIndicatorRow(indicatorId);
+                if (!row) {
+                    return;
+                }
+                
+                var insight = row.querySelector('.indicator-insight');
+                var descriptionPane = row.querySelector('.selected-level-description');
+                var levelChip = row.querySelector('.selected-level-chip');
+                var rangePill = row.querySelector('.selected-level-range');
+                var insightTitle = insight ? insight.querySelector('.insight-title') : null;
+                
+                if (!descriptionPane) {
+                    return;
+                }
+                
+                // Añadir clase de hover al insight y cambiar el título
+                if (insight) {
+                    insight.classList.add('hovering');
+                }
+                
+                if (insightTitle && !insightTitle.dataset.originalText) {
+                    insightTitle.dataset.originalText = insightTitle.textContent;
+                    var previewText = insightTitle.dataset.previewText || 'Now viewing:';
+                    insightTitle.textContent = previewText;
+                }
+                
+                // Guardar el contenido actual si no está guardado
+                if (!descriptionPane.dataset.originalContent) {
+                    descriptionPane.dataset.originalContent = descriptionPane.innerHTML;
+                    descriptionPane.dataset.originalHasSelection = descriptionPane.classList.contains('has-selection') ? 'true' : 'false';
+                }
+                
+                if (levelChip && !levelChip.dataset.originalContent) {
+                    levelChip.dataset.originalContent = levelChip.textContent;
+                    levelChip.dataset.originalHidden = levelChip.classList.contains('d-none') ? 'true' : 'false';
+                }
+                
+                if (rangePill && !rangePill.dataset.originalContent) {
+                    rangePill.dataset.originalContent = rangePill.textContent;
+                    rangePill.dataset.originalHidden = rangePill.classList.contains('d-none') ? 'true' : 'false';
+                }
+                
+                // Mostrar la descripción del nivel en hover
+                if (levelDescription) {
+                    descriptionPane.innerHTML = levelDescription;
+                    descriptionPane.classList.add('has-selection', 'preview-mode');
+                } else {
+                    var defaultMsg = descriptionPane.dataset.defaultMessage || 'Hover over a performance level to see its description.';
+                    descriptionPane.textContent = defaultMsg;
+                    descriptionPane.classList.remove('has-selection');
+                    descriptionPane.classList.add('preview-mode');
+                }
+                
+                // Actualizar chip y pill temporalmente
+                if (levelChip && levelName) {
+                    levelChip.textContent = levelName;
+                    levelChip.classList.remove('d-none');
+                }
+                
+                if (rangePill && rangeLabel) {
+                    rangePill.textContent = rangeLabel;
+                    rangePill.classList.remove('d-none');
+                }
+            });
+            
+            // Evento mouseleave - restaurar contenido original
+            option.addEventListener('mouseleave', function() {
+                if (option.dataset.readonly === '1') {
+                    return;
+                }
+                
+                var row = findIndicatorRow(indicatorId);
+                if (!row) {
+                    return;
+                }
+                
+                var insight = row.querySelector('.indicator-insight');
+                var descriptionPane = row.querySelector('.selected-level-description');
+                var levelChip = row.querySelector('.selected-level-chip');
+                var rangePill = row.querySelector('.selected-level-range');
+                var insightTitle = insight ? insight.querySelector('.insight-title') : null;
+                
+                // Remover clase de hover del insight y restaurar título
+                if (insight) {
+                    insight.classList.remove('hovering');
+                }
+                
+                if (insightTitle && insightTitle.dataset.originalText !== undefined) {
+                    insightTitle.textContent = insightTitle.dataset.originalText;
+                    delete insightTitle.dataset.originalText;
+                }
+                
+                // Restaurar contenido original
+                if (descriptionPane && descriptionPane.dataset.originalContent !== undefined) {
+                    descriptionPane.innerHTML = descriptionPane.dataset.originalContent;
+                    descriptionPane.classList.remove('preview-mode');
+                    
+                    if (descriptionPane.dataset.originalHasSelection === 'true') {
+                        descriptionPane.classList.add('has-selection');
+                    } else {
+                        descriptionPane.classList.remove('has-selection');
+                    }
+                    
+                    delete descriptionPane.dataset.originalContent;
+                    delete descriptionPane.dataset.originalHasSelection;
+                }
+                
+                if (levelChip && levelChip.dataset.originalContent !== undefined) {
+                    levelChip.textContent = levelChip.dataset.originalContent;
+                    if (levelChip.dataset.originalHidden === 'true') {
+                        levelChip.classList.add('d-none');
+                    } else {
+                        levelChip.classList.remove('d-none');
+                    }
+                    delete levelChip.dataset.originalContent;
+                    delete levelChip.dataset.originalHidden;
+                }
+                
+                if (rangePill && rangePill.dataset.originalContent !== undefined) {
+                    rangePill.textContent = rangePill.dataset.originalContent;
+                    if (rangePill.dataset.originalHidden === 'true') {
+                        rangePill.classList.add('d-none');
+                    } else {
+                        rangePill.classList.remove('d-none');
+                    }
+                    delete rangePill.dataset.originalContent;
+                    delete rangePill.dataset.originalHidden;
+                }
+            });
 
+            // Click para seleccionar
             option.addEventListener('click', function(event) {
                 if (option.dataset.readonly === '1') {
                     return;

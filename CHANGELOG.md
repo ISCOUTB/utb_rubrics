@@ -2,6 +2,10 @@
 
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
 
+## [1.0.3] - 2025-10-12
+
+- Mejora en la interfaz del profesor para la selección de niveles de desempeño.
+
 ## [1.0.2] - 2025-10-02
 
 - Corrección de errores menores en la calificación con rúbricas.
