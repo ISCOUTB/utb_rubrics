@@ -2,6 +2,10 @@
 
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
 
+## [1.0.4] - 2025-10-13
+
+- Mejora en la interfaz del profesor para la selección de niveles de desempeño en pantallas menores a 2K.
+
 ## [1.0.3] - 2025-10-12
 
 - Mejora en la interfaz del profesor para la selección de niveles de desempeño.

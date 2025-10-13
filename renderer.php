@@ -801,6 +801,9 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 overflow: hidden;
                 transition: transform 0.25s ease, box-shadow 0.25s ease;
                 border-left: 6px solid rgba(5, 160, 160, 0.6);
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .indicator-card:before {
@@ -880,28 +883,42 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-levels {
                 order: 1;
                 width: 100%;
+                max-width: 100%;
+                min-width: 0;
+                overflow: hidden;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-side {
                 order: 2;
                 display: flex;
                 flex-direction: column;
-                gap: 18px;
+                gap: 24px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-                gap: 14px;
+                /* Usa min() para adaptarse al contenedor - nunca más grande que 100% del contenedor dividido por el número de columnas ideales */
+                grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+                gap: 12px;
                 width: 100%;
+                max-width: 100%;
                 justify-items: stretch;
                 align-items: stretch;
                 grid-auto-rows: 1fr;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-1 {
@@ -909,51 +926,37 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(220px, 48%), 1fr));
             }
 
-            .gradingform_utbrubrics .performance-levels.modern-levels.levels-3,
+            .gradingform_utbrubrics .performance-levels.modern-levels.levels-3 {
+                grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+            }
+
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(145px, 100%), 1fr));
             }
 
-            @media (min-width: 1600px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-3 {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
+            /* Ajustes para espacios reducidos (contenedores estrechos) */
+            @media (max-width: 768px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    grid-template-columns: 1fr !important;
+                    gap: 10px;
                 }
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                    grid-template-columns: repeat(4, minmax(0, 1fr));
-                }
+            }
+
+            /* Para tablets y espacios medianos */
+            @media (max-width: 1024px) and (min-width: 769px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-3,
+                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4,
                 .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
                 .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
-                }
-            }
-
-            @media (max-width: 1599px) and (min-width: 1200px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
-                }
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
-                }
-            }
-
-            @media (max-width: 1199px) and (min-width: 960px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels {
-                    grid-template-columns: repeat(2, minmax(0, 1fr));
-                }
-            }
-
-            @media (max-width: 959px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels {
-                    grid-template-columns: 1fr;
+                    grid-template-columns: repeat(auto-fit, minmax(min(140px, 48%), 1fr));
                 }
             }
 
@@ -1113,13 +1116,15 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .indicator-insight {
-                margin: 0;
+                margin: 0 0 4px 0;
                 padding: 20px 22px;
                 background: rgba(5, 160, 160, 0.08);
                 border-radius: 16px;
                 border: 1px solid rgba(5, 160, 160, 0.12);
                 box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
                 transition: all 0.3s ease;
+                width: 100%;
+                box-sizing: border-box;
             }
             
             .gradingform_utbrubrics .indicator-insight.hovering {
@@ -1174,42 +1179,62 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border-radius: 14px;
                 padding: 20px;
                 box-shadow: inset 0 0 0 1px rgba(3, 127, 127, 0.05);
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-row {
                 display: grid;
-                grid-template-columns: 1fr 2fr;
+                grid-template-columns: minmax(140px, 1fr) minmax(200px, 2fr);
                 gap: 20px;
                 align-items: start;
+                width: 100%;
+                max-width: 100%;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-col {
                 display: flex;
                 flex-direction: column;
+                min-width: 0;
+                max-width: 100%;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-col-score {
                 min-width: 0;
+                max-width: 100%;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-col-feedback {
                 min-width: 0;
+                max-width: 100%;
             }
 
-            @media (max-width: 768px) {
+            @media (max-width: 900px) {
                 .gradingform_utbrubrics .indicator-card .grading-controls .grading-row {
                     grid-template-columns: 1fr;
                     gap: 16px;
                 }
             }
 
+            .gradingform_utbrubrics .indicator-card .grading-controls textarea,
+            .gradingform_utbrubrics .indicator-card .grading-controls select,
+            .gradingform_utbrubrics .indicator-card .grading-controls input {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
             .gradingform_utbrubrics .indicator-card .grading-controls textarea {
                 resize: vertical;
+                min-height: 80px;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .form-label {
                 font-weight: 600;
                 color: #0f2d3d;
+                margin-bottom: 8px;
+                display: block;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .score-range-display {
