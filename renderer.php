@@ -98,15 +98,33 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
         
         // Add comprehensive CSS for better styling
         $out .= html_writer::tag('style', '
-            .gradingform_utbrubrics { margin: 20px 0; }
+            /* Global reset para contenedores flexibles */
+            .gradingform_utbrubrics,
+            .gradingform_utbrubrics * {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .gradingform_utbrubrics { 
+                margin: 20px 0;
+                width: 100%;
+                overflow-x: hidden;
+            }
+            
             .gradingform_utbrubrics .rubric-header {
                 text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             }
+            
             .gradingform_utbrubrics .rubric-content {
                 padding: 25px;
+                width: 100%;
+                max-width: 100%;
             }
+            
             .gradingform_utbrubrics .student-outcome-section {
                 margin-bottom: 30px;
+                width: 100%;
+                max-width: 100%;
             }
             .gradingform_utbrubrics .so-header-container {
                 background: linear-gradient(135deg, #05a0a0 0%, #037f7f 100%);
@@ -115,6 +133,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 margin-bottom: 20px;
                 overflow: hidden;
                 position: relative;
+                width: 100%;
+                max-width: 100%;
             }
             .gradingform_utbrubrics .so-header-container::before {
                 content: "";
@@ -135,7 +155,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 margin: 0;
                 background: transparent;
                 letter-spacing: 0.5px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                width: 100%;
             }
+            
             .gradingform_utbrubrics .so-description {
                 color: white;
                 padding: 0 25px 25px 25px;
@@ -146,6 +170,9 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 background: transparent;
                 line-height: 1.5;
                 font-weight: 400;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                width: 100%;
             }
             .gradingform_utbrubrics .rubric-table { 
                 margin-bottom: 20px; 
@@ -796,9 +823,9 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border-radius: 22px;
                 border: 1px solid rgba(3, 127, 127, 0.12);
                 box-shadow: 0 18px 45px rgba(8, 35, 64, 0.07);
-                padding: 32px;
+                padding: 24px;
                 position: relative;
-                overflow: hidden;
+                overflow: visible;
                 transition: transform 0.25s ease, box-shadow 0.25s ease;
                 border-left: 6px solid rgba(5, 160, 160, 0.6);
                 width: 100%;
@@ -910,9 +937,9 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .performance-levels.modern-levels {
                 display: grid;
-                /* Usa min() para adaptarse al contenedor - nunca más grande que 100% del contenedor dividido por el número de columnas ideales */
-                grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
-                gap: 12px;
+                /* Grid ultra-flexible que se adapta al contenedor real */
+                grid-template-columns: repeat(auto-fit, minmax(min(clamp(140px, 15vw, 160px), 100%), 1fr));
+                gap: clamp(10px, 1.5vw, 12px);
                 width: 100%;
                 max-width: 100%;
                 justify-items: stretch;
@@ -926,20 +953,20 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-2 {
-                grid-template-columns: repeat(auto-fit, minmax(min(220px, 48%), 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(clamp(180px, 20vw, 220px), 48%), 1fr));
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-3 {
-                grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(clamp(150px, 17vw, 170px), 100%), 1fr));
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(clamp(140px, 15vw, 160px), 100%), 1fr));
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                grid-template-columns: repeat(auto-fit, minmax(min(145px, 100%), 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(min(clamp(130px, 14vw, 145px), 100%), 1fr));
             }
 
             /* Ajustes para espacios reducidos (contenedores estrechos) */
@@ -1019,12 +1046,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             .gradingform_utbrubrics .modern-level-main {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: clamp(6px, 1.2vw, 10px);
                 align-items: center;
                 justify-content: center;
                 width: 100%;
-                min-height: 140px;
-                padding: 20px 16px;
+                min-height: clamp(100px, 15vw, 140px);
+                padding: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 16px);
                 flex: 1;
                 text-align: center;
                 overflow: hidden;
@@ -1032,7 +1059,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .modern-level-name {
                 font-weight: 700;
-                font-size: 1.1rem;
+                font-size: clamp(0.9rem, 1.3vw + 0.4rem, 1.1rem);
                 color: #0f2d3d;
                 text-align: center;
                 line-height: 1.3;
@@ -1048,8 +1075,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .modern-level-range {
-                font-size: 0.85rem;
-                letter-spacing: 0.08em;
+                font-size: clamp(0.72rem, 1vw + 0.3rem, 0.85rem);
+                letter-spacing: clamp(0.05em, 0.5vw + 0.02em, 0.08em);
                 text-transform: uppercase;
                 color: #5f7a86;
                 font-weight: 500;
@@ -1336,6 +1363,116 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 
                 .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
                     min-height: 120px;
+                }
+            }
+            
+            /* Ajustes basados en ancho del CONTENEDOR, no de la pantalla */
+            /* Estos se activan cuando el grade bar tiene menos espacio disponible */
+            @media (max-width: 1200px) {
+                .gradingform_utbrubrics {
+                    margin: clamp(10px, 1.5vw, 15px) 0;
+                }
+                
+                .gradingform_utbrubrics .rubric-content {
+                    padding: clamp(12px, 2vw, 18px);
+                }
+                
+                .gradingform_utbrubrics .so-header {
+                    font-size: clamp(1.1em, 2vw + 0.5em, 1.4em);
+                    padding: clamp(16px, 2vw, 20px) clamp(12px, 1.5vw, 16px) clamp(10px, 1.2vw, 12px) clamp(12px, 1.5vw, 16px);
+                }
+                
+                .gradingform_utbrubrics .so-description {
+                    font-size: clamp(0.9em, 1.5vw + 0.4em, 1em);
+                    padding: 0 clamp(16px, 2vw, 20px) clamp(16px, 2vw, 20px) clamp(16px, 2vw, 20px);
+                }
+                
+                .gradingform_utbrubrics .indicator-card {
+                    padding: clamp(16px, 2.5vw, 20px);
+                    border-radius: clamp(16px, 2vw, 18px);
+                }
+                
+                .gradingform_utbrubrics .indicator-layout {
+                    gap: clamp(12px, 1.8vw, 16px);
+                }
+                
+                .gradingform_utbrubrics .modern-level-main {
+                    padding: clamp(10px, 1.5vw, 12px) clamp(8px, 1.2vw, 10px);
+                    min-height: clamp(100px, 12vw, 110px);
+                }
+                
+                .gradingform_utbrubrics .modern-level-name {
+                    font-size: clamp(0.85rem, 1.2vw + 0.4rem, 0.95rem);
+                }
+            }
+            
+            /* Espacios muy reducidos - contenedores estrechos independiente de resolución */
+            @media (max-width: 900px) {
+                .gradingform_utbrubrics {
+                    margin: clamp(8px, 1.2vw, 10px) 0;
+                }
+                
+                .gradingform_utbrubrics .rubric-content {
+                    padding: clamp(10px, 1.5vw, 12px);
+                }
+                
+                .gradingform_utbrubrics .so-header {
+                    font-size: clamp(1em, 1.8vw + 0.4em, 1.2em);
+                    padding: clamp(12px, 1.8vw, 16px) clamp(10px, 1.4vw, 12px) clamp(8px, 1.2vw, 10px) clamp(10px, 1.4vw, 12px);
+                }
+                
+                .gradingform_utbrubrics .so-description {
+                    font-size: clamp(0.85em, 1.3vw + 0.3em, 0.95em);
+                    padding: 0 clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px) clamp(12px, 1.8vw, 16px);
+                    line-height: 1.4;
+                }
+                
+                .gradingform_utbrubrics .indicator-card {
+                    padding: clamp(12px, 2vw, 16px);
+                    border-radius: clamp(14px, 1.8vw, 16px);
+                }
+                
+                .gradingform_utbrubrics .indicator-layout {
+                    gap: clamp(10px, 1.5vw, 12px);
+                }
+                
+                .gradingform_utbrubrics .indicator-side {
+                    gap: clamp(12px, 1.8vw, 16px);
+                }
+                
+                .gradingform_utbrubrics .indicator-insight {
+                    padding: clamp(14px, 2vw, 16px) clamp(16px, 2.2vw, 18px);
+                }
+                
+                .gradingform_utbrubrics .insight-title {
+                    font-size: clamp(0.62rem, 0.9vw + 0.3rem, 0.68rem);
+                }
+                
+                .gradingform_utbrubrics .selected-level-description {
+                    font-size: clamp(0.85rem, 1.2vw + 0.4rem, 0.92rem);
+                    min-height: clamp(40px, 6vw, 48px);
+                }
+                
+                .gradingform_utbrubrics .grading-controls {
+                    padding: clamp(14px, 2vw, 16px);
+                }
+                
+                .gradingform_utbrubrics .modern-level-main {
+                    padding: clamp(8px, 1.3vw, 10px) clamp(6px, 1vw, 8px);
+                    min-height: clamp(90px, 11vw, 100px);
+                    gap: clamp(4px, 0.8vw, 6px);
+                }
+                
+                .gradingform_utbrubrics .modern-level-name {
+                    font-size: clamp(0.8rem, 1.1vw + 0.3rem, 0.9rem);
+                }
+                
+                .gradingform_utbrubrics .modern-level-range {
+                    font-size: clamp(0.7rem, 0.9vw + 0.2rem, 0.75rem);
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    gap: clamp(8px, 1.2vw, 10px);
                 }
             }
         ');
