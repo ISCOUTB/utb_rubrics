@@ -825,7 +825,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 box-shadow: 0 8px 24px rgba(8, 35, 64, 0.08);
                 padding: 24px;
                 position: relative;
-                overflow: hidden;
+                overflow: visible;
                 transition: box-shadow 0.25s ease;
                 border-left: 6px solid rgba(5, 160, 160, 0.6);
                 width: 100%;
@@ -1140,11 +1140,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 
                 .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-name {
                     margin-bottom: 4px !important;
-                    font-size: clamp(0.8rem, 1.2vw, 0.95rem) !important;
-                    line-height: 1.2 !important;
+                    font-size: clamp(0.7rem, 1vw, 0.85rem) !important;
+                    line-height: 1.3 !important;
                     text-align: center !important;
                     word-wrap: break-word !important;
                     overflow-wrap: break-word !important;
+                    hyphens: auto !important;
                     width: 100% !important;
                     white-space: normal !important;
                 }
@@ -1302,11 +1303,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-row {
                 display: grid;
-                grid-template-columns: minmax(140px, 1fr) minmax(200px, 2fr);
+                grid-template-columns: minmax(140px, 1fr) minmax(0, 2fr);
                 gap: 20px;
                 align-items: start;
                 width: 100%;
                 max-width: 100%;
+                overflow: visible;
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-col {
@@ -1324,6 +1326,8 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             .gradingform_utbrubrics .indicator-card .grading-controls .grading-col-feedback {
                 min-width: 0;
                 max-width: 100%;
+                flex: 1 1 auto;
+                overflow: visible;
             }
 
             @media (max-width: 900px) {
