@@ -119,7 +119,7 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
             'timemodified' => time()
         ];
         $this->test_outcome = (object)$so_data;
-        $this->test_outcome->id = $DB->insert_record('gradingform_utb_outcomes', $so_data);
+        $this->test_outcome->id = $DB->insert_record('gradingform_utb_so', $so_data);
 
         // Create test Indicator
         $indicator_data = [
@@ -131,7 +131,7 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
             'timemodified' => time()
         ];
         $this->test_indicator = (object)$indicator_data;
-        $this->test_indicator->id = $DB->insert_record('gradingform_utb_indicators', $indicator_data);
+        $this->test_indicator->id = $DB->insert_record('gradingform_utb_ind', $indicator_data);
 
         // Create test Performance Level
         $level_data = [
@@ -272,7 +272,7 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
             'timemodified' => time()
         ];
         
-        $evaluation_id = $DB->insert_record('gradingform_utb_evaluations', $evaluation_data);
+        $evaluation_id = $DB->insert_record('gradingform_utb_eval', $evaluation_data);
         $this->assertGreaterThan(0, $evaluation_id, 'Teacher should be able to create evaluation record');
 
         // Update grading instance with final grade
@@ -286,7 +286,7 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
         ]);
 
         // Verify grading was recorded correctly
-        $evaluation = $DB->get_record('gradingform_utb_evaluations', ['id' => $evaluation_id]);
+        $evaluation = $DB->get_record('gradingform_utb_eval', ['id' => $evaluation_id]);
         $this->assertEquals($this->student->id, $evaluation->studentid);
         $this->assertEquals($this->test_level->id, $evaluation->performance_level_id);
         $this->assertEquals(4.8, $evaluation->score);
@@ -354,13 +354,13 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
             'timecreated' => time(),
             'timemodified' => time()
         ];
-        $evaluation_id = $DB->insert_record('gradingform_utb_evaluations', $evaluation_data);
+        $evaluation_id = $DB->insert_record('gradingform_utb_eval', $evaluation_data);
 
         // Now switch to student perspective
         $this->setUser($this->student);
 
         // Test student can view their evaluation
-        $student_evaluation = $DB->get_record('gradingform_utb_evaluations', [
+        $student_evaluation = $DB->get_record('gradingform_utb_eval', [
             'id' => $evaluation_id,
             'studentid' => $this->student->id
         ]);
@@ -370,11 +370,11 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
         $this->assertEquals(4.2, $student_evaluation->score);
 
         // Test student can see the rubric structure they were graded with
-        $outcome = $DB->get_record('gradingform_utb_outcomes', ['id' => $student_evaluation->student_outcome_id]);
+        $outcome = $DB->get_record('gradingform_utb_so', ['id' => $student_evaluation->student_outcome_id]);
         $this->assertNotNull($outcome, 'Student should see the student outcome they were evaluated on');
         $this->assertEquals('Test Communication Skills', $outcome->title_en);
 
-        $indicator = $DB->get_record('gradingform_utb_indicators', ['id' => $student_evaluation->indicator_id]);
+        $indicator = $DB->get_record('gradingform_utb_ind', ['id' => $student_evaluation->indicator_id]);
         $this->assertNotNull($indicator, 'Student should see the specific indicator');
         $this->assertEquals('Demonstrates clear written communication', $indicator->description_en);
 
@@ -465,12 +465,12 @@ class gradingform_utbrubrics_workflow_test extends advanced_testcase {
             'timecreated' => time(),
             'timemodified' => time()
         ];
-        $evaluation_id = $DB->insert_record('gradingform_utb_evaluations', $evaluation_data);
+        $evaluation_id = $DB->insert_record('gradingform_utb_eval', $evaluation_data);
         echo "✓ Step 4: Teacher graded student using UTB rubric\n";
 
         // Step 5: Student views results
         $this->setUser($this->student);
-        $student_evaluation = $DB->get_record('gradingform_utb_evaluations', [
+        $student_evaluation = $DB->get_record('gradingform_utb_eval', [
             'studentid' => $this->student->id,
             'activityid' => $this->assignment->cmid
         ]);

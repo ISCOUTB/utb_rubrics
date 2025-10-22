@@ -32,10 +32,10 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Clean existing test data
-        $DB->delete_records('gradingform_utb_evaluations');
+        $DB->delete_records('gradingform_utb_eval');
         $DB->delete_records('gradingform_utb_lvl');
-        $DB->delete_records('gradingform_utb_indicators');
-        $DB->delete_records('gradingform_utb_outcomes');
+        $DB->delete_records('gradingform_utb_ind');
+        $DB->delete_records('gradingform_utb_so');
     }
 
     /**
@@ -55,7 +55,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
             'timecreated' => time(),
             'timemodified' => time()
         ];
-        $so_id = $DB->insert_record('gradingform_utb_outcomes', $so_data);
+        $so_id = $DB->insert_record('gradingform_utb_so', $so_data);
 
         // Create sample indicator
         $indicator_data = [
@@ -66,7 +66,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
             'timecreated' => time(),
             'timemodified' => time()
         ];
-        $indicator_id = $DB->insert_record('gradingform_utb_indicators', $indicator_data);
+        $indicator_id = $DB->insert_record('gradingform_utb_ind', $indicator_data);
 
         // Create sample performance level
         $level_data = [
@@ -92,10 +92,10 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
 
         // Check that all required tables exist
         $expected_tables = [
-            'gradingform_utb_outcomes',
-            'gradingform_utb_indicators', 
+            'gradingform_utb_so',
+            'gradingform_utb_ind', 
             'gradingform_utb_lvl',
-            'gradingform_utb_evaluations'
+            'gradingform_utb_eval'
         ];
 
         foreach ($expected_tables as $table) {
@@ -113,7 +113,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         global $DB;
 
         $dbman = $DB->get_manager();
-        $table = new xmldb_table('gradingform_utb_outcomes');
+        $table = new xmldb_table('gradingform_utb_so');
 
         $this->assertTrue($dbman->table_exists($table));
 
@@ -128,7 +128,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
             $field = new xmldb_field($fieldname);
             $this->assertTrue(
                 $dbman->field_exists($table, $field),
-                "Field {$fieldname} should exist in gradingform_utb_outcomes table"
+                "Field {$fieldname} should exist in gradingform_utb_so table"
             );
         }
     }
@@ -140,7 +140,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         global $DB;
 
         $dbman = $DB->get_manager();
-        $table = new xmldb_table('gradingform_utb_indicators');
+        $table = new xmldb_table('gradingform_utb_ind');
 
         $this->assertTrue($dbman->table_exists($table));
 
@@ -155,7 +155,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
             $field = new xmldb_field($fieldname);
             $this->assertTrue(
                 $dbman->field_exists($table, $field),
-                "Field {$fieldname} should exist in gradingform_utb_indicators table"
+                "Field {$fieldname} should exist in gradingform_utb_ind table"
             );
         }
     }
@@ -194,7 +194,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         global $DB;
 
         $dbman = $DB->get_manager();
-        $table = new xmldb_table('gradingform_utb_evaluations');
+        $table = new xmldb_table('gradingform_utb_eval');
 
         $this->assertTrue($dbman->table_exists($table));
 
@@ -209,7 +209,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
             $field = new xmldb_field($fieldname);
             $this->assertTrue(
                 $dbman->field_exists($table, $field),
-                "Field {$fieldname} should exist in gradingform_utb_evaluations table"
+                "Field {$fieldname} should exist in gradingform_utb_eval table"
             );
         }
     }
@@ -225,11 +225,11 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         $this->load_sample_initial_data();
 
         // Check that student outcomes were loaded
-        $outcomes_count = $DB->count_records('gradingform_utb_outcomes');
+        $outcomes_count = $DB->count_records('gradingform_utb_so');
         $this->assertGreaterThan(0, $outcomes_count, 'Student outcomes should be loaded during installation');
 
         // Check that indicators were loaded
-        $indicators_count = $DB->count_records('gradingform_utb_indicators');  
+        $indicators_count = $DB->count_records('gradingform_utb_ind');  
         $this->assertGreaterThan(0, $indicators_count, 'Indicators should be loaded during installation');
 
         // Check that performance levels were loaded
@@ -245,8 +245,8 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
 
         // Test that all indicators have valid student outcome references
         $sql = "SELECT i.id, i.student_outcome_id 
-                FROM {gradingform_utb_indicators} i 
-                LEFT JOIN {gradingform_utb_outcomes} so ON i.student_outcome_id = so.id 
+                FROM {gradingform_utb_ind} i 
+                LEFT JOIN {gradingform_utb_so} so ON i.student_outcome_id = so.id 
                 WHERE so.id IS NULL";
         
         $orphaned_indicators = $DB->get_records_sql($sql);
@@ -255,7 +255,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         // Test that all performance levels have valid indicator references
         $sql = "SELECT pl.id, pl.indicator_id 
                 FROM {gradingform_utb_lvl} pl 
-                LEFT JOIN {gradingform_utb_indicators} i ON pl.indicator_id = i.id 
+                LEFT JOIN {gradingform_utb_ind} i ON pl.indicator_id = i.id 
                 WHERE i.id IS NULL";
         
         $orphaned_levels = $DB->get_records_sql($sql);
@@ -269,7 +269,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         global $DB;
 
         // Test student outcomes have both English and Spanish content
-        $sql = "SELECT id FROM {gradingform_utb_outcomes} 
+        $sql = "SELECT id FROM {gradingform_utb_so} 
                 WHERE title_en IS NULL OR title_en = '' 
                 OR title_es IS NULL OR title_es = ''
                 OR description_en IS NULL OR description_en = ''
@@ -279,7 +279,7 @@ class gradingform_utbrubrics_database_test extends advanced_testcase {
         $this->assertEmpty($incomplete_outcomes, 'All student outcomes should have complete bilingual content');
 
         // Test indicators have both English and Spanish content
-        $sql = "SELECT id FROM {gradingform_utb_indicators} 
+        $sql = "SELECT id FROM {gradingform_utb_ind} 
                 WHERE description_en IS NULL OR description_en = ''
                 OR description_es IS NULL OR description_es = ''";
         

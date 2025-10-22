@@ -44,10 +44,10 @@ class gradingform_utbrubrics_helper_functions_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Clean existing test data
-        $DB->delete_records('gradingform_utb_evaluations');
+        $DB->delete_records('gradingform_utb_eval');
         $DB->delete_records('gradingform_utb_lvl');
-        $DB->delete_records('gradingform_utb_indicators');
-        $DB->delete_records('gradingform_utb_outcomes');
+        $DB->delete_records('gradingform_utb_ind');
+        $DB->delete_records('gradingform_utb_so');
 
         // Create test data
         $this->create_test_data();
@@ -71,7 +71,7 @@ class gradingform_utbrubrics_helper_functions_test extends advanced_testcase {
             'timemodified' => time()
         ];
         $this->test_so = (object)$so_data;
-        $this->test_so->id = $DB->insert_record('gradingform_utb_outcomes', $so_data);
+        $this->test_so->id = $DB->insert_record('gradingform_utb_so', $so_data);
 
         // Create test Indicator (note: indicators only have description, not title)
         $indicator_data = [
@@ -83,7 +83,7 @@ class gradingform_utbrubrics_helper_functions_test extends advanced_testcase {
             'timemodified' => time()
         ];
         $this->test_indicator = (object)$indicator_data;
-        $this->test_indicator->id = $DB->insert_record('gradingform_utb_indicators', $indicator_data);
+        $this->test_indicator->id = $DB->insert_record('gradingform_utb_ind', $indicator_data);
 
         // Create test Performance Level
         $pl_data = [
