@@ -13,18 +13,18 @@ require_once($CFG->dirroot.'/grade/grading/form/utbrubrics/db/helper_functions.p
  * 
  * 1. SOURCE: gradingform_utbrubrics_controller->render_grading_element()
  *    - Gets data from gradingform_instance->get_utbrubrics_filling()
- *    - Data comes from 'gradingform_utb_evaluations' database table
+ *    - Data comes from 'gradingform_utb_eval' database table
  *    - Falls back to form submission data or empty array
  *
  * 2. STRUCTURE:
  *    $value = [
  *        'criteria' => [
  *            indicator_id => [
- *                'id' => evaluation_record_id,               // from gradingform_utb_evaluations.id
- *                'instanceid' => grading_instance_id,        // from gradingform_utb_evaluations.instanceid
+ *                'id' => evaluation_record_id,               // from gradingform_utb_eval.id
+ *                'instanceid' => grading_instance_id,        // from gradingform_utb_eval.instanceid
  *                'criterionid' => indicator_id,              // backwards compatibility
- *                'indicator_id' => indicator_id,             // from gradingform_utb_evaluations.indicator_id
- *                'student_outcome_id' => so_id,              // from gradingform_utb_evaluations.student_outcome_id
+ *                'indicator_id' => indicator_id,             // from gradingform_utb_eval.indicator_id
+ *                'student_outcome_id' => so_id,              // from gradingform_utb_eval.student_outcome_id
  *                'performance_level_id' => level_id,         // selected performance level
  *                'score' => numeric_score,                   // final score given
  *                'feedback' => feedback_text,                // teacher feedback
@@ -151,7 +151,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 text-align: center;
                 text-shadow: 0 2px 4px rgba(0,0,0,0.3);
                 font-weight: 300;
-                font-size: 1.6em;
+                font-size: clamp(1.2em, 2.2vw + 0.5em, 1.6em);
                 margin: 0;
                 background: transparent;
                 letter-spacing: 0.5px;
@@ -165,7 +165,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 padding: 0 25px 25px 25px;
                 text-align: center;
                 opacity: 0.95;
-                font-size: 1.1em;
+                font-size: clamp(0.95em, 1.6vw + 0.4em, 1.1em);
                 margin: 0;
                 background: transparent;
                 line-height: 1.5;
@@ -527,11 +527,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 margin-bottom: 5px;
             }
             .gradingform_utbrubrics .grade-input { 
-                width: 120px; 
+                width: 80px; 
                 text-align: center; 
                 font-weight: bold;
-                font-size: 1.1em;
-                padding: 10px;
+                font-size: clamp(0.9em, 1.4vw + 0.3em, 1em);
+                padding: 8px;
                 border: 2px solid #ddd;
                 border-radius: 4px;
             }
@@ -807,7 +807,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border-radius: 10px;
                 padding: 16px 20px;
                 color: #055160;
-                font-size: 0.95em;
+                font-size: clamp(0.85em, 1.3vw + 0.35em, 0.95em);
                 margin-bottom: 22px;
             }
 
@@ -822,11 +822,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,252,0.98));
                 border-radius: 22px;
                 border: 1px solid rgba(3, 127, 127, 0.12);
-                box-shadow: 0 18px 45px rgba(8, 35, 64, 0.07);
+                box-shadow: 0 8px 24px rgba(8, 35, 64, 0.08);
                 padding: 24px;
                 position: relative;
-                overflow: visible;
-                transition: transform 0.25s ease, box-shadow 0.25s ease;
+                overflow: hidden;
+                transition: box-shadow 0.25s ease;
                 border-left: 6px solid rgba(5, 160, 160, 0.6);
                 width: 100%;
                 max-width: 100%;
@@ -841,11 +841,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 opacity: 0;
                 transition: opacity 0.25s ease;
                 pointer-events: none;
+                border-radius: 22px;
             }
 
             .gradingform_utbrubrics .indicator-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 22px 55px rgba(8, 35, 64, 0.09);
+                box-shadow: 0 10px 28px rgba(8, 35, 64, 0.12);
             }
 
             .gradingform_utbrubrics .indicator-card:hover:before,
@@ -867,7 +867,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 background: linear-gradient(135deg, rgba(5,160,160,0.9), rgba(3,127,127,0.85));
                 color: #ffffff;
                 font-weight: 700;
-                font-size: 1.3rem;
+                font-size: clamp(1.1rem, 1.8vw + 0.3rem, 1.3rem);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -881,7 +881,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-title {
-                font-size: 1.18rem;
+                font-size: clamp(1rem, 1.6vw + 0.4rem, 1.18rem);
                 font-weight: 600;
                 color: #0f2d3d;
                 letter-spacing: -0.01em;
@@ -891,19 +891,41 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 color: #4a5c68;
                 line-height: 1.55;
                 margin: 0;
-                font-size: 0.98rem;
+                font-size: clamp(0.88rem, 1.3vw + 0.3rem, 0.98rem);
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-helper {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                font-size: 0.85rem;
+                font-size: clamp(0.78rem, 1.1vw + 0.25rem, 0.85rem);
                 color: #056b6b;
                 background: rgba(5, 160, 160, 0.08);
                 border-radius: 999px;
                 padding: 6px 14px;
                 letter-spacing: 0.04em;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            /* Show desktop message by default */
+            .gradingform_utbrubrics .indicator-helper .helper-mobile {
+                display: none;
+            }
+            
+            .gradingform_utbrubrics .indicator-helper .helper-desktop {
+                display: inline;
+            }
+            
+            /* Switch to mobile message on small screens */
+            @media (max-width: 768px) {
+                .gradingform_utbrubrics .indicator-helper .helper-desktop {
+                    display: none;
+                }
+                
+                .gradingform_utbrubrics .indicator-helper .helper-mobile {
+                    display: inline;
+                }
             }
 
             .gradingform_utbrubrics .indicator-card .indicator-layout {
@@ -936,77 +958,63 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels {
-                display: grid;
-                /* Grid ultra-flexible que se adapta al contenedor real */
-                grid-template-columns: repeat(auto-fit, minmax(min(clamp(140px, 15vw, 160px), 100%), 1fr));
-                gap: clamp(10px, 1.5vw, 12px);
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: clamp(6px, 0.8vw, 10px);
                 width: 100%;
                 max-width: 100%;
-                justify-items: stretch;
+                justify-content: flex-start;
                 align-items: stretch;
-                grid-auto-rows: 1fr;
                 box-sizing: border-box;
+                overflow-x: auto;
+                overflow-y: hidden;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-1 {
-                grid-template-columns: 1fr;
+                justify-content: center;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-2 {
-                grid-template-columns: repeat(auto-fit, minmax(min(clamp(180px, 20vw, 220px), 48%), 1fr));
+                gap: clamp(8px, 1.2vw, 12px);
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-3 {
-                grid-template-columns: repeat(auto-fit, minmax(min(clamp(150px, 17vw, 170px), 100%), 1fr));
+                gap: clamp(7px, 1vw, 11px);
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-4 {
-                grid-template-columns: repeat(auto-fit, minmax(min(clamp(140px, 15vw, 160px), 100%), 1fr));
+                gap: clamp(6px, 0.8vw, 10px);
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
             .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                grid-template-columns: repeat(auto-fit, minmax(min(clamp(130px, 14vw, 145px), 100%), 1fr));
-            }
-
-            /* Ajustes para espacios reducidos (contenedores estrechos) */
-            @media (max-width: 768px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels {
-                    grid-template-columns: 1fr !important;
-                    gap: 10px;
-                }
-            }
-
-            /* Para tablets y espacios medianos */
-            @media (max-width: 1024px) and (min-width: 769px) {
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-3,
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-4,
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-5,
-                .gradingform_utbrubrics .performance-levels.modern-levels.levels-6 {
-                    grid-template-columns: repeat(auto-fit, minmax(min(140px, 48%), 1fr));
-                }
+                gap: clamp(5px, 0.6vw, 8px);
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option {
                 padding: 0;
-                width: 100%;
+                flex: 1 1 0;
                 min-width: 0;
-                height: 100%;
-                overflow: hidden;
-                border-radius: 16px;
+                max-width: none;
+                height: auto;
+                overflow: visible;
+                border-radius: 12px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
-                border-radius: 16px !important;
+                border-radius: 12px !important;
                 border: 1px solid rgba(8, 35, 64, 0.1) !important;
-                box-shadow: 0 12px 32px rgba(15, 45, 61, 0.12) !important;
+                box-shadow: 0 2px 6px rgba(15, 45, 61, 0.06) !important;
                 overflow: hidden;
-                min-height: 140px;
-                height: 100%;
+                min-height: auto;
+                height: auto;
                 position: relative;
                 display: flex;
                 flex-direction: column;
-                transition: all 0.25s ease;
+                transition: box-shadow 0.2s ease, border-color 0.2s ease;
+                cursor: pointer;
+                transform: none !important;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card .card-body {
@@ -1016,17 +1024,17 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
-                border-radius: 16px;
+                border-radius: 12px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card:after {
                 content: "";
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(140deg, rgba(3, 127, 127, 0.08), rgba(5, 160, 160, 0));
+                background: linear-gradient(140deg, rgba(3, 127, 127, 0.05), rgba(5, 160, 160, 0));
                 opacity: 0;
-                transition: opacity 0.25s ease;
-                border-radius: 16px;
+                transition: opacity 0.2s ease;
+                border-radius: 12px;
             }
 
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .card:after,
@@ -1046,12 +1054,12 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             .gradingform_utbrubrics .modern-level-main {
                 display: flex;
                 flex-direction: column;
-                gap: clamp(6px, 1.2vw, 10px);
+                gap: clamp(2px, 0.3vw, 4px);
                 align-items: center;
                 justify-content: center;
                 width: 100%;
-                min-height: clamp(100px, 15vw, 140px);
-                padding: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 16px);
+                min-height: auto;
+                padding: clamp(6px, 0.9vw, 9px) clamp(8px, 1.2vw, 12px);
                 flex: 1;
                 text-align: center;
                 overflow: hidden;
@@ -1059,24 +1067,23 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
 
             .gradingform_utbrubrics .modern-level-name {
                 font-weight: 700;
-                font-size: clamp(0.9rem, 1.3vw + 0.4rem, 1.1rem);
+                font-size: clamp(0.8rem, 1vw + 0.25rem, 0.9rem);
                 color: #0f2d3d;
                 text-align: center;
-                line-height: 1.3;
-                letter-spacing: -0.02em;
+                line-height: 1.2;
+                letter-spacing: -0.01em;
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 width: 100%;
                 max-width: 100%;
                 overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             .gradingform_utbrubrics .modern-level-range {
-                font-size: clamp(0.72rem, 1vw + 0.3rem, 0.85rem);
-                letter-spacing: clamp(0.05em, 0.5vw + 0.02em, 0.08em);
+                font-size: clamp(0.65rem, 0.75vw + 0.2rem, 0.72rem);
+                letter-spacing: clamp(0.03em, 0.3vw + 0.02em, 0.05em);
                 text-transform: uppercase;
                 color: #5f7a86;
                 font-weight: 500;
@@ -1084,50 +1091,132 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 width: 100%;
+                white-space: nowrap;
             }
 
-            /* Hover effect on cards - simple border highlight */
+            /* Hover effect on cards - sutil y minimalista */
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option:hover .card {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                box-shadow: 0 4px 12px rgba(3, 127, 127, 0.15) !important;
+                border-color: rgba(3, 127, 127, 0.4) !important;
+                transform: none !important;
             }
             
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option:focus-within .card {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                box-shadow: 0 4px 12px rgba(3, 127, 127, 0.15) !important;
+                border-color: rgba(3, 127, 127, 0.4) !important;
+                transform: none !important;
+            }
+
+            /* FORZAR UNA SOLA FILA EN PC - Mantener uniforme y compacto */
+            @media (min-width: 769px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                    align-items: stretch !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option {
+                    flex: 1 1 0 !important;
+                    min-width: 0 !important;
+                    display: flex !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
+                    height: 100% !important;
+                    min-height: auto !important;
+                    max-height: none !important;
+                    width: 100% !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-main {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    height: 100% !important;
+                    padding: 10px 8px !important;
+                    min-height: 70px !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-name {
+                    margin-bottom: 4px !important;
+                    font-size: clamp(0.8rem, 1.2vw, 0.95rem) !important;
+                    line-height: 1.2 !important;
+                    text-align: center !important;
+                    word-wrap: break-word !important;
+                    overflow-wrap: break-word !important;
+                    width: 100% !important;
+                    white-space: normal !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-range {
+                    margin-top: 0 !important;
+                    font-size: clamp(0.65rem, 0.9vw, 0.75rem) !important;
+                    white-space: nowrap !important;
+                }
+            }
+
+            /* CARDS 2x2 COMPACTAS PARA MÓVILES - Solo en modo calificación */
+            @media (max-width: 768px) {
+                .gradingform_utbrubrics .performance-levels.modern-levels {
+                    flex-direction: row !important;
+                    flex-wrap: wrap !important;
+                    gap: 8px !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option {
+                    flex: 0 0 calc(50% - 4px) !important;
+                    width: calc(50% - 4px) !important;
+                    min-width: calc(50% - 4px) !important;
+                    max-width: calc(50% - 4px) !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .card {
+                    min-height: auto !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-main {
+                    padding: 10px 8px !important;
+                    min-height: auto !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-name {
+                    font-size: 0.85rem !important;
+                    line-height: 1.2 !important;
+                }
+                
+                .gradingform_utbrubrics .performance-levels.modern-levels .level-option .modern-level-range {
+                    font-size: 0.7rem !important;
+                }
             }
             
-            /* Colores por tipo de nivel - solo cuando está seleccionado */
+            /* Colores por tipo de nivel - solo cuando está seleccionado - MÁS SUTILES */
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-excellent .card { 
-                background-color: #d4edda !important; 
-                border-color: #28a745 !important;
+                background-color: #e8f5e9 !important; 
+                border-color: #4caf50 !important;
                 border-width: 2px !important;
-                box-shadow: 0 3px 6px rgba(40,167,69,0.25) !important;
-                transform: translateY(-1px) !important;
+                box-shadow: 0 2px 6px rgba(76,175,80,0.2) !important;
             }
             
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-good .card { 
-                background-color: #cce7ff !important; 
-                border-color: #007bff !important;
+                background-color: #e3f2fd !important; 
+                border-color: #2196f3 !important;
                 border-width: 2px !important;
-                box-shadow: 0 3px 6px rgba(0,123,255,0.25) !important;
-                transform: translateY(-1px) !important;
+                box-shadow: 0 2px 6px rgba(33,150,243,0.2) !important;
             }
             
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-fair .card { 
-                background-color: #fff3cd !important; 
-                border-color: #ffc107 !important;
+                background-color: #fff9e6 !important; 
+                border-color: #ffb300 !important;
                 border-width: 2px !important;
-                box-shadow: 0 3px 6px rgba(255,193,7,0.25) !important;
-                transform: translateY(-1px) !important;
+                box-shadow: 0 2px 6px rgba(255,179,0,0.2) !important;
             }
             
             .gradingform_utbrubrics .performance-levels.modern-levels .level-option.selected.level-inadequate .card { 
-                background-color: #f8d7da !important; 
-                border-color: #dc3545 !important;
+                background-color: #ffebee !important; 
+                border-color: #ef5350 !important;
                 border-width: 2px !important;
-                box-shadow: 0 3px 6px rgba(220,53,69,0.25) !important;
-                transform: translateY(-1px) !important;
+                box-shadow: 0 2px 6px rgba(239,83,80,0.2) !important;
             }
 
             .gradingform_utbrubrics .selected-level-chip {
@@ -1139,7 +1228,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 font-weight: 600;
                 letter-spacing: 0.05em;
                 text-transform: uppercase;
-                font-size: 0.85rem;
+                font-size: clamp(0.75rem, 1.1vw + 0.25rem, 0.85rem);
             }
 
             .gradingform_utbrubrics .indicator-insight {
@@ -1205,7 +1294,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 background: linear-gradient(145deg, rgba(249,252,255,0.9), rgba(238,246,249,0.9));
                 border-radius: 14px;
                 padding: 20px;
-                box-shadow: inset 0 0 0 1px rgba(3, 127, 127, 0.05);
+                box-shadow: none;
                 width: 100%;
                 max-width: 100%;
                 box-sizing: border-box;
@@ -1262,10 +1351,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 color: #0f2d3d;
                 margin-bottom: 8px;
                 display: block;
+                font-size: clamp(0.9rem, 1.3vw + 0.3rem, 1rem);
             }
 
             .gradingform_utbrubrics .indicator-card .grading-controls .score-range-display {
-                font-size: 0.85rem;
+                font-size: clamp(0.75rem, 1.1vw + 0.25rem, 0.85rem);
                 letter-spacing: 0.05em;
                 text-align: center;
             }
@@ -1294,7 +1384,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 border-radius: 999px;
                 background: rgba(3,127,127,0.12);
                 color: #055160;
-                font-size: 0.78rem;
+                font-size: clamp(0.7rem, 1vw + 0.2rem, 0.78rem);
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
                 font-weight: 600;
@@ -1685,13 +1775,13 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             $range_text = '';
             if ($selected_level && isset($selected_level['min']) && isset($selected_level['max'])) {
                 $range_text = get_string('graderange', 'gradingform_utbrubrics', (object)[
-                    'min' => number_format((float)$selected_level['min'], 2, '.', ''),
-                    'max' => number_format((float)$selected_level['max'], 2, '.', '')
+                    'min' => number_format((float)$selected_level['min'], 1, '.', ''),
+                    'max' => number_format((float)$selected_level['max'], 1, '.', '')
                 ]);
             } else if (isset($current_value['minscore']) && isset($current_value['maxscore'])) {
                 $range_text = get_string('graderange', 'gradingform_utbrubrics', (object)[
-                    'min' => number_format((float)$current_value['minscore'], 2, '.', ''),
-                    'max' => number_format((float)$current_value['maxscore'], 2, '.', '')
+                    'min' => number_format((float)$current_value['minscore'], 1, '.', ''),
+                    'max' => number_format((float)$current_value['maxscore'], 1, '.', '')
                 ]);
             }
 
@@ -1744,7 +1834,16 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             } else {
                 $out .= html_writer::div(format_string($indicatorcode), 'indicator-title');
             }
-            $out .= html_writer::div(get_string('indicator_hover_helper', 'gradingform_utbrubrics'), 'indicator-helper');
+            
+            // Different messages for desktop and mobile
+            $desktop_msg = get_string('indicator_hover_helper', 'gradingform_utbrubrics');
+            $mobile_msg = get_string('indicator_mobile_helper', 'gradingform_utbrubrics');
+            
+            $out .= html_writer::div(
+                html_writer::tag('span', $desktop_msg, ['class' => 'helper-desktop']) .
+                html_writer::tag('span', $mobile_msg, ['class' => 'helper-mobile']),
+                'indicator-helper'
+            );
             $out .= html_writer::end_div();
             $out .= html_writer::end_div();
 
@@ -2785,13 +2884,16 @@ JS;
                 $levelclass .= ' selected';
             }
 
-            $minvalue = isset($level['min']) ? number_format((float)$level['min'], 2, '.', '') : '';
-            $maxvalue = isset($level['max']) ? number_format((float)$level['max'], 2, '.', '') : '';
+            $minvalue = isset($level['min']) ? number_format((float)$level['min'], 1, '.', '') : '';
+            $maxvalue = isset($level['max']) ? number_format((float)$level['max'], 1, '.', '') : '';
             $rangeobject = (object)[
-                'min' => $minvalue !== '' ? $minvalue : '0.00',
-                'max' => $maxvalue !== '' ? $maxvalue : '0.00'
+                'min' => $minvalue !== '' ? $minvalue : '0.0',
+                'max' => $maxvalue !== '' ? $maxvalue : '0.0'
             ];
-            $rangetext = ($minvalue !== '' && $maxvalue !== '') ?
+            // Para las cards, solo mostrar el rango sin la palabra "RANGO:"
+            $rangetext = ($minvalue !== '' && $maxvalue !== '') ? ($minvalue . ' - ' . $maxvalue) : '';
+            // Guardar también la versión completa con "RANGO:" para otras partes
+            $rangetext_full = ($minvalue !== '' && $maxvalue !== '') ?
                 get_string('graderange', 'gradingform_utbrubrics', $rangeobject) : '';
 
             $levelname = format_string($level['definition'] ?? '');
@@ -2811,7 +2913,8 @@ JS;
                 'data-max' => $maxvalue,
                 'data-level-name' => $levelname,
                 'data-level-type' => $leveltype,
-                'data-range-label' => $rangetext,
+                'data-range-label' => $rangetext_full, // Versión completa con "RANGO:" para el área de calificación
+                'data-range-short' => $rangetext, // Versión corta sin "RANGO:" para las cards
                 'tabindex' => $isgrading ? '0' : '-1'
             ];
 
@@ -3042,14 +3145,16 @@ JS;
         if (scoreInput) {
             scoreInput.disabled = false;
             if (!isNaN(min)) {
-                scoreInput.min = min;
+                scoreInput.dataset.min = min;
             }
             if (!isNaN(max)) {
-                scoreInput.max = max;
+                scoreInput.dataset.max = max;
             }
 
             if (!isNaN(min) && !isNaN(max)) {
-                scoreInput.placeholder = min.toFixed(2) + ' - ' + max.toFixed(2);
+                var minFormatted = min.toFixed(1).replace(',', '.');
+                var maxFormatted = max.toFixed(1).replace(',', '.');
+                scoreInput.placeholder = minFormatted + ' - ' + maxFormatted;
                 if (rangeLabel) {
                     scoreInput.title = rangeLabel;
                 } else {
@@ -3063,15 +3168,15 @@ JS;
             // Auto-llenar con la nota máxima del nivel si el campo está vacío
             if (scoreInput.value === '' || scoreInput.value.trim() === '') {
                 if (!isNaN(max)) {
-                    scoreInput.value = max.toFixed(2);
+                    scoreInput.value = max.toFixed(1).replace(',', '.');
                 }
             } else {
                 // Si ya tiene un valor, verificar si está fuera de rango
-                var current = parseFloat(scoreInput.value);
+                var current = parseFloat(scoreInput.value.replace(',', '.'));
                 if ((!isNaN(min) && current < min) || (!isNaN(max) && current > max)) {
                     // Si está fuera de rango, poner la nota máxima
                     if (!isNaN(max)) {
-                        scoreInput.value = max.toFixed(2);
+                        scoreInput.value = max.toFixed(1).replace(',', '.');
                     } else {
                         scoreInput.value = '';
                     }
@@ -3164,18 +3269,16 @@ JS;
             return;
         }
 
+        // Validar formato: solo números y punto decimal
         var justDot = rawValue === '.';
-        var justComma = rawValue === ',';
         var hasComma = rawValue.indexOf(',') !== -1;
-        var hasNonNumeric = /[^0-9.,]/.test(rawValue);
+        var hasNonNumeric = /[^0-9.]/.test(rawValue);
         var dotMatches = rawValue.match(/\./g) || [];
         var hasMultipleDots = dotMatches.length > 1;
         var hasTrailingDot = rawValue.endsWith('.');
-        var hasTrailingComma = rawValue.endsWith(',');
+        var startsWithDot = rawValue.startsWith('.');
 
-        var invalidCommaUsage = hasComma;
-
-        var invalidFormat = justDot || justComma || hasNonNumeric || hasMultipleDots || hasTrailingDot || hasTrailingComma || invalidCommaUsage;
+        var invalidFormat = justDot || hasComma || hasNonNumeric || hasMultipleDots || hasTrailingDot || startsWithDot;
 
         var value = NaN;
         if (!invalidFormat) {
@@ -3194,8 +3297,8 @@ JS;
             return;
         }
 
-        var min = parseFloat(input.min);
-        var max = parseFloat(input.max);
+        var min = parseFloat(input.dataset.min);
+        var max = parseFloat(input.dataset.max);
         var outOfRange = false;
 
         if (!outOfRange && !isNaN(min) && value < min) {
@@ -3292,7 +3395,8 @@ JS;
             var indicatorId = option.dataset.indicatorId;
             var levelDescription = option.dataset.levelDescription || '';
             var levelName = option.dataset.levelName || '';
-            var rangeLabel = option.dataset.rangeLabel || '';
+            var rangeLabel = option.dataset.rangeLabel || ''; // Versión completa con "RANGO:" para el área de calificación
+            var rangeShort = option.dataset.rangeShort || ''; // Versión corta sin "RANGO:" para mostrar en hover
             
             // Evento mouseenter - mostrar descripción en el insight
             option.addEventListener('mouseenter', function() {
@@ -3359,6 +3463,7 @@ JS;
                     levelChip.classList.remove('d-none');
                 }
                 
+                // En el rangePill (hover insight), usar la versión completa CON "RANGO:"
                 if (rangePill && rangeLabel) {
                     rangePill.textContent = rangeLabel;
                     rangePill.classList.remove('d-none');
@@ -3495,13 +3600,68 @@ JS;
 
             input.dataset.utbCardsBound = '1';
 
+            // Prevenir entrada de caracteres no válidos (incluyendo coma)
             input.addEventListener('keydown', function(e) {
+                // Prevenir signo negativo
                 if (e.key === '-' || e.key === 'Minus') {
                     e.preventDefault();
+                    return;
                 }
+                
+                // Prevenir coma - forzar solo punto decimal
+                if (e.key === ',' || e.key === 'Comma') {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Permitir teclas de control (backspace, delete, arrows, tab, etc.)
+                if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' ||
+                    e.key === 'ArrowLeft' || e.key === 'ArrowRight' || 
+                    e.key === 'Home' || e.key === 'End' ||
+                    (e.ctrlKey || e.metaKey)) {
+                    return;
+                }
+                
+                // Permitir números
+                if (e.key >= '0' && e.key <= '9') {
+                    return;
+                }
+                
+                // Permitir punto decimal solo si no hay ya uno
+                if (e.key === '.' || e.key === 'Decimal') {
+                    if (input.value.indexOf('.') !== -1) {
+                        e.preventDefault();
+                        return;
+                    }
+                    return;
+                }
+                
+                // Bloquear cualquier otro carácter
+                e.preventDefault();
+            });
+            
+            // Validar en paste para reemplazar comas por puntos
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                var pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                // Reemplazar comas por puntos automáticamente
+                pastedText = pastedText.replace(/,/g, '.');
+                // Limpiar cualquier carácter no válido
+                pastedText = pastedText.replace(/[^0-9.]/g, '');
+                // Asegurar solo un punto decimal
+                var parts = pastedText.split('.');
+                if (parts.length > 2) {
+                    pastedText = parts[0] + '.' + parts.slice(1).join('');
+                }
+                input.value = pastedText;
+                validateScoreInput(input);
             });
 
             input.addEventListener('input', function() {
+                // Reemplazar comas por puntos si se logran ingresar de alguna manera
+                if (input.value.indexOf(',') !== -1) {
+                    input.value = input.value.replace(/,/g, '.');
+                }
                 validateScoreInput(input);
             });
             input.addEventListener('keyup', function() {
@@ -3509,11 +3669,6 @@ JS;
             });
             input.addEventListener('blur', function() {
                 validateScoreInput(input);
-            });
-            input.addEventListener('paste', function() {
-                setTimeout(function() {
-                    validateScoreInput(input);
-                }, 10);
             });
 
             validateScoreInput(input);
@@ -3554,19 +3709,19 @@ JS;
         $rawscore = $current_value['score'] ?? null;
         $current_score = '';
         if ($rawscore !== null && $rawscore !== '') {
-            $current_score = number_format((float)$rawscore, 2, '.', '');
+            $current_score = number_format((float)$rawscore, 1, '.', '');
         }
 
         $range = null;
         if ($selected_level && isset($selected_level['min']) && isset($selected_level['max'])) {
             $range = [
-                'min' => number_format((float)$selected_level['min'], 2, '.', ''),
-                'max' => number_format((float)$selected_level['max'], 2, '.', '')
+                'min' => number_format((float)$selected_level['min'], 1, '.', ''),
+                'max' => number_format((float)$selected_level['max'], 1, '.', '')
             ];
         } elseif (isset($current_value['minscore']) && isset($current_value['maxscore'])) {
             $range = [
-                'min' => number_format((float)$current_value['minscore'], 2, '.', ''),
-                'max' => number_format((float)$current_value['maxscore'], 2, '.', '')
+                'min' => number_format((float)$current_value['minscore'], 1, '.', ''),
+                'max' => number_format((float)$current_value['maxscore'], 1, '.', '')
             ];
         }
 
@@ -3655,19 +3810,21 @@ JS;
         $range_text = $rangeobject ? get_string('graderange', 'gradingform_utbrubrics', $rangeobject) : $default_select_text;
 
         $score_attrs = [
-            'type' => 'number',
+            'type' => 'text',
             'name' => $elementname . '[criteria][' . $indicator_id . '][score]',
             'value' => $current_score,
             'class' => 'form-control score-input',
-            'step' => '0.01',
+            'inputmode' => 'decimal',
             'data-indicator-id' => $indicator_id,
-            'placeholder' => ''
+            'placeholder' => '',
+            'pattern' => '[0-9]*\.?[0-9]*',
+            'autocomplete' => 'off'
         ];
 
         if ($range) {
-            $score_attrs['min'] = $range['min'];
-            $score_attrs['max'] = $range['max'];
-            $score_attrs['placeholder'] = $range['min'] . ' - ' . $range['max'];
+            $score_attrs['data-min'] = $range['min'];
+            $score_attrs['data-max'] = $range['max'];
+            $score_attrs['placeholder'] = number_format($range['min'], 1, '.', '') . ' - ' . number_format($range['max'], 1, '.', '');
             $score_attrs['title'] = $range_text;
         } else {
             $score_attrs['disabled'] = 'disabled';

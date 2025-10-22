@@ -157,10 +157,10 @@ utbrubrics/
 
 El plugin utiliza las siguientes tablas:
 
-- `gradingform_utb_outcomes` - Student Outcomes
-- `gradingform_utb_indicators` - Indicadores de evaluación de cada SO
+- `gradingform_utb_so` - Student Outcomes
+- `gradingform_utb_ind` - Indicadores de evaluación de cada SO
 - `gradingform_utb_lvl` - Niveles de desempeño de cada indicador por cada SO
-- `gradingform_utb_evaluations` - Evaluaciones realizadas
+- `gradingform_utb_eval` - Evaluaciones realizadas
 
 ---
 

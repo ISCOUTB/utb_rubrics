@@ -17,12 +17,6 @@ $string['performancelevels'] = 'Niveles de Desempeño';
 $string['indicatornotgraded'] = 'Su profesor aún no ha calificado este indicador.';
 $string['validationerror'] = 'Debes seleccionar un nivel de desempeño y una calificación válida para cada indicador antes de guardar.';
 
-// Definiciones de niveles de desempeño
-$string['excellent'] = 'Excelente (4.5-5.0)';
-$string['good'] = 'Bueno (3.5-4.49)';
-$string['fair'] = 'Regular (3.0-3.49)';
-$string['inadequate'] = 'Inadecuado (0-2.99)';
-
 // Renderer interface strings
 $string['evaluator_warning'] = '⚠️ IMPORTANTE: Debe seleccionar/ingresar todos los valores para guardar/calificar (tanto los Niveles de Desempeño como las Calificaciones). Sabrá que ha sido guardado cuando aparezca la notificación, de lo contrario, no se guardará nada.';
 $string['criteria'] = 'Criterios';
@@ -69,6 +63,7 @@ $string['feedback_label'] = 'Retroalimentación:';
 $string['teacher_feedback'] = 'Retroalimentación del Profesor:';
 $string['instructor_evaluation_hint'] = 'Selecciona un nivel de desempeño para cada indicador. Pasa el cursor sobre cada tarjeta para previsualizar su descripción y selecciónala para habilitar la calificación y la retroalimentación.';
 $string['indicator_hover_helper'] = 'Pasa el cursor por cada nivel de desempeño para ver la descripción debajo.';
+$string['indicator_mobile_helper'] = 'Al seleccionar un nivel de desempeño podrá ver su descripción abajo.';
 $string['indicator_select_prompt'] = 'Selecciona un nivel de desempeño para mostrar su descripción aquí.';
 $string['indicator_selected_heading'] = 'Detalle del nivel seleccionado';
 $string['indicator_previewing_heading'] = 'Ahora estás viendo:';

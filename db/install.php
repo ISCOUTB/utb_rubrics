@@ -627,10 +627,10 @@ function xmldb_gradingform_utbrubrics_install() {
     
     // Standard performance level titles and score ranges
     $standard_levels = [
-        'Excellent' => ['title_es' => 'Excelente', 'minscore' => 4.50, 'maxscore' => 5.00, 'sortorder' => 4],
-        'Good' => ['title_es' => 'Bueno', 'minscore' => 3.50, 'maxscore' => 4.49, 'sortorder' => 3],
-        'Fair' => ['title_es' => 'Regular', 'minscore' => 3.00, 'maxscore' => 3.49, 'sortorder' => 2],
-        'Inadequate' => ['title_es' => 'Inadecuado', 'minscore' => 0.00, 'maxscore' => 2.99, 'sortorder' => 1]
+        'Excellent' => ['title_es' => 'Excelente', 'minscore' => 4.5, 'maxscore' => 5.0, 'sortorder' => 4],
+        'Good' => ['title_es' => 'Bueno', 'minscore' => 3.5, 'maxscore' => 4.4, 'sortorder' => 3],
+        'Fair' => ['title_es' => 'Regular', 'minscore' => 3.0, 'maxscore' => 3.4, 'sortorder' => 2],
+        'Inadequate' => ['title_es' => 'Inadecuado', 'minscore' => 0.0, 'maxscore' => 2.9, 'sortorder' => 1]
     ];
     
     try {
@@ -650,7 +650,7 @@ function xmldb_gradingform_utbrubrics_install() {
             $so_record->timecreated = $time;
             $so_record->timemodified = $time;
             
-            $so_id = $DB->insert_record('gradingform_utb_outcomes', $so_record);
+            $so_id = $DB->insert_record('gradingform_utb_so', $so_record);
             
             foreach ($so_data['indicators'] as $indicator_letter => $indicator_data) {
                 // Insert Indicator
@@ -662,7 +662,7 @@ function xmldb_gradingform_utbrubrics_install() {
                 $indicator_record->timecreated = $time;
                 $indicator_record->timemodified = $time;
                 
-                $indicator_id = $DB->insert_record('gradingform_utb_indicators', $indicator_record);
+                $indicator_id = $DB->insert_record('gradingform_utb_ind', $indicator_record);
                 
                 // Insert Performance Levels specific to this indicator
                 $performance_levels_for_indicator = $performance_levels_by_so[$so_key][$indicator_letter];

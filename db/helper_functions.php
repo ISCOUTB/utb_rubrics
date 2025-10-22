@@ -36,7 +36,7 @@ function gradingform_utbrubrics_get_student_outcomes($lang = null) {
     
     $sql = "SELECT id, so_number, {$title_field} as title, {$desc_field} as description,
                    sortorder, timecreated, timemodified
-            FROM {gradingform_utb_outcomes}
+            FROM {gradingform_utb_so}
             ORDER BY sortorder ASC";
     
     $outcomes = $DB->get_records_sql($sql);
@@ -75,7 +75,7 @@ function gradingform_utbrubrics_get_indicators_for_so($so_id, $lang = null) {
     
     $sql = "SELECT id, student_outcome_id, indicator_letter, 
                    {$desc_field} as description, timecreated, timemodified
-            FROM {gradingform_utb_indicators}
+            FROM {gradingform_utb_ind}
             WHERE student_outcome_id = :so_id
             ORDER BY indicator_letter ASC";
     
@@ -270,7 +270,7 @@ function gradingform_utbrubrics_save_evaluation($evaluation_data) {
     $record->timemodified = time();
     
     // Check if evaluation already exists for this instance and indicator
-    $existing = $DB->get_record('gradingform_utb_evaluations', [
+    $existing = $DB->get_record('gradingform_utb_eval', [
         'instanceid' => $record->instanceid,
         'indicator_id' => $record->indicator_id
     ]);
@@ -279,10 +279,10 @@ function gradingform_utbrubrics_save_evaluation($evaluation_data) {
         // Update existing record
         $record->id = $existing->id;
         $record->timecreated = $existing->timecreated; // Keep original creation time
-        return $DB->update_record('gradingform_utb_evaluations', $record);
+        return $DB->update_record('gradingform_utb_eval', $record);
     } else {
         // Insert new record
-        return $DB->insert_record('gradingform_utb_evaluations', $record);
+        return $DB->insert_record('gradingform_utb_eval', $record);
     }
 }
 
@@ -302,9 +302,9 @@ function gradingform_utbrubrics_get_evaluations_for_instance($instanceid, $lang 
                    l.title_{$lang} as performance_level_name, 
                    l.description_{$lang} as performance_level_description,
                    l.minscore, l.maxscore
-            FROM {gradingform_utb_evaluations} e
-            JOIN {gradingform_utb_outcomes} so ON so.id = e.student_outcome_id
-            JOIN {gradingform_utb_indicators} i ON i.id = e.indicator_id
+            FROM {gradingform_utb_eval} e
+            JOIN {gradingform_utb_so} so ON so.id = e.student_outcome_id
+            JOIN {gradingform_utb_ind} i ON i.id = e.indicator_id
             LEFT JOIN {gradingform_utb_lvl} l ON l.id = e.performance_level_id
             WHERE e.instanceid = :instanceid
             ORDER BY so.sortorder ASC, i.indicator_letter ASC";
@@ -349,17 +349,17 @@ function gradingform_utbrubrics_delete_definition_data($definitionid) {
         $transaction = $DB->start_delegated_transaction();
         
         // Get all Student Outcomes for this definition
-        $student_outcomes = $DB->get_records('gradingform_utb_outcomes', 
+        $student_outcomes = $DB->get_records('gradingform_utb_so', 
                                            ['definitionid' => $definitionid]);
         
         foreach ($student_outcomes as $so) {
             // Get all indicators for this SO
-            $indicators = $DB->get_records('gradingform_utb_indicators', 
+            $indicators = $DB->get_records('gradingform_utb_ind', 
                                          ['student_outcome_id' => $so->id]);
             
             foreach ($indicators as $indicator) {
                 // Delete evaluations for this indicator
-                $DB->delete_records('gradingform_utb_evaluations', 
+                $DB->delete_records('gradingform_utb_eval', 
                                   ['indicator_id' => $indicator->id]);
                 
                 // Delete level ranges for this indicator
@@ -368,12 +368,12 @@ function gradingform_utbrubrics_delete_definition_data($definitionid) {
             }
             
             // Delete indicators
-            $DB->delete_records('gradingform_utb_indicators', 
+            $DB->delete_records('gradingform_utb_ind', 
                               ['student_outcome_id' => $so->id]);
         }
         
         // Delete student outcomes
-        $DB->delete_records('gradingform_utb_outcomes', 
+        $DB->delete_records('gradingform_utb_so', 
                           ['definitionid' => $definitionid]);
         
         $transaction->allow_commit();

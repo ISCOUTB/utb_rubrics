@@ -333,7 +333,7 @@ class gradingform_utbrubrics_controller extends gradingform_controller {
         $instances = array_keys($DB->get_records('grading_instances', ['definitionid' => $this->definition->id], '', 'id'));
         if ($instances) {
             // Delete evaluations for these instances
-            $DB->delete_records_list('gradingform_utb_evaluations', 'instanceid', $instances);
+            $DB->delete_records_list('gradingform_utb_eval', 'instanceid', $instances);
             // Delete the instances themselves
             $DB->delete_records_list('grading_instances', 'id', $instances);
         }
@@ -605,7 +605,7 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
     public function clear_attempt($data) {
         global $DB;
         foreach ($data['criteria'] as $indicator_id => $record) {
-            $DB->delete_records('gradingform_utb_evaluations', [
+            $DB->delete_records('gradingform_utb_eval', [
                 'indicator_id' => $indicator_id, 
                 'instanceid' => $this->get_id()
             ]);
@@ -766,7 +766,7 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
                 $shouldremove = !$existsindefinition || (!empty($processed) && !in_array($indicatorid, $processed, true));
 
                 if ($shouldremove) {
-                    $DB->delete_records('gradingform_utb_evaluations', [
+                    $DB->delete_records('gradingform_utb_eval', [
                         'instanceid' => $this->get_id(),
                         'indicator_id' => $indicatorid
                     ]);
@@ -849,7 +849,7 @@ class gradingform_utbrubrics_instance extends gradingform_instance {
         }
 
         if (empty($context['studentid'])) {
-            $existingstudent = $DB->get_field('gradingform_utb_evaluations', 'studentid', ['instanceid' => $this->get_id()], IGNORE_MISSING);
+            $existingstudent = $DB->get_field('gradingform_utb_eval', 'studentid', ['instanceid' => $this->get_id()], IGNORE_MISSING);
             if ($existingstudent) {
                 $context['studentid'] = (int)$existingstudent;
             }

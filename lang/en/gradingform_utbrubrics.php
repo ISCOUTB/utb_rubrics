@@ -17,12 +17,6 @@ $string['performancelevels'] = 'Performance Levels';
 $string['indicatornotgraded'] = 'Your teacher has not graded this indicator yet.';
 $string['validationerror'] = 'Select a performance level and enter a valid score for every indicator before saving.';
 
-// Performance level definitions
-$string['excellent'] = 'Excellent (4.5-5.0)';
-$string['good'] = 'Good (3.5-4.49)';
-$string['fair'] = 'Fair (3.0-3.49)';
-$string['inadequate'] = 'Inadequate (0-2.99)';
-
 // Renderer interface strings
 $string['evaluator_warning'] = '⚠️ IMPORTANT: You must select/enter all values to save/grade (both Performance Levels and Grades). You will know it has been saved when the notification appears, otherwise nothing will be saved.';
 $string['criteria'] = 'Criteria';
@@ -69,6 +63,7 @@ $string['feedback_label'] = 'Feedback:';
 $string['teacher_feedback'] = 'Teacher Feedback:';
 $string['instructor_evaluation_hint'] = 'Choose a performance level for each indicator. Hover a card to preview its description and select it to unlock grading and feedback.';
 $string['indicator_hover_helper'] = 'Hover each performance level to preview the description below.';
+$string['indicator_mobile_helper'] = 'Select a performance level to view the description below.';
 $string['indicator_select_prompt'] = 'Select a performance level to reveal its description here.';
 $string['indicator_selected_heading'] = 'Selected level insight';
 $string['indicator_previewing_heading'] = 'Now viewing:';
