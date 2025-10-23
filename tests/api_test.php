@@ -239,11 +239,15 @@ class api_test extends advanced_testcase {
         // Create evaluation
         $DB->insert_record('gradingform_utb_eval', [
             'instanceid' => $instance,
+            'studentid' => $student->id,
+            'courseid' => $course->id,
+            'activityid' => $assign->id,
+            'activityname' => 'Test Assignment',
+            'student_outcome_id' => $so_id,
             'indicator_id' => $ind_id,
             'performance_level_id' => $lvl_id,
             'score' => 3.0,
             'feedback' => 'Good work',
-            'studentid' => $student->id,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
@@ -345,11 +349,15 @@ class api_test extends advanced_testcase {
 
             $DB->insert_record('gradingform_utb_eval', [
                 'instanceid' => $instance,
+                'studentid' => $student->id,
+                'courseid' => $course->id,
+                'activityid' => $assign->id,
+                'activityname' => 'Test Assignment',
+                'student_outcome_id' => $so_id,
                 'indicator_id' => $ind_id,
                 'performance_level_id' => $lvl_id,
                 'score' => 3.0,
                 'feedback' => 'Test',
-                'studentid' => $student->id,
                 'timecreated' => time(),
                 'timemodified' => time(),
             ]);
@@ -446,11 +454,15 @@ class api_test extends advanced_testcase {
 
             $DB->insert_record('gradingform_utb_eval', [
                 'instanceid' => $instance,
+                'studentid' => $student->id,
+                'courseid' => $course->id,
+                'activityid' => $assign->id,
+                'activityname' => 'Test Assignment',
+                'student_outcome_id' => $so_id,
                 'indicator_id' => $ind_id,
                 'performance_level_id' => $lvl_id,
                 'score' => 3.0,
                 'feedback' => 'Test',
-                'studentid' => $student->id,
                 'timecreated' => time(),
                 'timemodified' => time(),
             ]);
