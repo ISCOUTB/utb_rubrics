@@ -37,8 +37,8 @@ class api_test extends advanced_testcase {
         $this->resetAfterTest(true);
         $this->setAdminUser();
 
-        // Use unique SO numbers to avoid duplicates
-        $unique_so = 'SOTEST' . time();
+        // Use unique SO numbers to avoid duplicates (max 12 chars)
+        $unique_so = 'SO' . substr(time(), -6) . 'T1';
         
         // Create a student outcome
         $so_id = $DB->insert_record('gradingform_utb_so', [
@@ -113,7 +113,7 @@ class api_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a student outcome
-        $unique_so2 = 'SOTEST' . time() . '_es';
+        $unique_so2 = 'SO' . substr(time(), -6) . 'T2';
         $so_id = $DB->insert_record('gradingform_utb_so', [
             'so_number' => $unique_so2,
             'title_en' => 'Problem Solving',
@@ -158,12 +158,13 @@ class api_test extends advanced_testcase {
             'name' => 'Test Rubric',
             'status' => 20,
             'usercreated' => 2,
+            'usermodified' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
         // Create student outcome, indicator, and level
-        $unique_so5 = 'SOTEST' . time() . '_nofilter';
+        $unique_so5 = 'SO' . substr(time(), -6) . 'T5';
         $so_id = $DB->insert_record('gradingform_utb_so', [
             'so_number' => $unique_so5,
             'title_en' => 'Test',
@@ -264,11 +265,12 @@ class api_test extends advanced_testcase {
             'name' => 'Test',
             'status' => 20,
             'usercreated' => 2,
+            'usermodified' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
-        $unique_so3 = 'SOTEST' . time() . '_grader';
+        $unique_so3 = 'SO' . substr(time(), -6) . 'T3';
         $so_id = $DB->insert_record('gradingform_utb_so', [
             'so_number' => $unique_so3,
             'title_en' => 'Test',
@@ -363,11 +365,12 @@ class api_test extends advanced_testcase {
             'name' => 'Test',
             'status' => 20,
             'usercreated' => 2,
+            'usermodified' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
-        $unique_so4 = 'SOTEST' . time() . '_student';
+        $unique_so4 = 'SO' . substr(time(), -6) . 'T4';
         $so_id = $DB->insert_record('gradingform_utb_so', [
             'so_number' => $unique_so4,
             'title_en' => 'Test',
