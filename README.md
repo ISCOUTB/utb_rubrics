@@ -114,9 +114,9 @@ Después de la instalación, verifica que:
 
 ```
 📊 Estadísticas de Pruebas:
-├── 55+ Pruebas Unitarias
-├── 230+ Aserciones
-├── 6 Archivos de Prueba
+├── 62+ Pruebas Unitarias
+├── 250+ Aserciones
+├── 7 Archivos de Prueba
 └── 100% Cobertura Crítica
 ```
 
@@ -128,6 +128,8 @@ Después de la instalación, verifica que:
 | `lang_test.php` | 10 | Archivos de idioma |
 | `renderer_test.php` | 14 | Renderizado y vistas |
 | `workflow_test.php` | 4 | Flujos de trabajo completos |
+| `api_test.php` | 7 | Web Services API y seguridad |
+
 
 ### 🔄 **CI/CD Automatizado**
 

@@ -2,6 +2,10 @@
 
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
 
+## [1.1.0] - 2025-10-23
+
+- Novedad: Nueva API Web Service para acceder a las evaluaciones de rúbricas UTB e información de los students outcomes.
+
 ## [1.0.7] - 2025-10-21
 
 - Correcciones en la visualización del feedback del profesor en la calificación con rúbricas.

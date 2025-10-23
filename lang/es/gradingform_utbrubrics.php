@@ -68,3 +68,8 @@ $string['indicator_select_prompt'] = 'Selecciona un nivel de desempeño para mos
 $string['indicator_selected_heading'] = 'Detalle del nivel seleccionado';
 $string['indicator_previewing_heading'] = 'Ahora estás viendo:';
 $string['indicator_confirmed_heading'] = 'Has seleccionado:';
+
+// Web Service API strings
+$string['apiaccessdenied'] = 'Acceso denegado: Solo los profesores y administradores pueden acceder a esta API';
+$string['apiinvalidlanguage'] = 'Código de idioma no válido. Usa "en" o "es"';
+$string['apinoevaluations'] = 'No se encontraron evaluaciones con los filtros especificados';

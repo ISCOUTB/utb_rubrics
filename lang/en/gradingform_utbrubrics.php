@@ -68,3 +68,8 @@ $string['indicator_select_prompt'] = 'Select a performance level to reveal its d
 $string['indicator_selected_heading'] = 'Selected level insight';
 $string['indicator_previewing_heading'] = 'Now viewing:';
 $string['indicator_confirmed_heading'] = 'You have selected:';
+
+// Web Service API strings
+$string['apiaccessdenied'] = 'Access denied: Only teachers and administrators can access this API';
+$string['apiinvalidlanguage'] = 'Invalid language code. Use "en" or "es"';
+$string['apinoevaluations'] = 'No evaluations found with the specified filters';
