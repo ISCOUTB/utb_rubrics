@@ -86,7 +86,16 @@ class api_test extends advanced_testcase {
         $this->assertEquals('en', $result['language']);
         $this->assertGreaterThan(0, $result['count']);
         
-        $outcome = $result['student_outcomes'][0];
+        // Find our created SO in the results
+        $outcome = null;
+        foreach ($result['student_outcomes'] as $so) {
+            if ($so['so_number'] === $unique_so) {
+                $outcome = $so;
+                break;
+            }
+        }
+        $this->assertNotNull($outcome, "Created SO {$unique_so} not found in results");
+        
         $this->assertEquals($unique_so, $outcome['so_number']);
         $this->assertEquals('Test Outcome', $outcome['title']);
         $this->assertArrayHasKey('indicators', $outcome);
@@ -129,7 +138,16 @@ class api_test extends advanced_testcase {
         $result = get_student_outcomes::execute('es');
         
         $this->assertEquals('es', $result['language']);
-        $outcome = $result['student_outcomes'][0];
+        
+        // Find our created SO in the results
+        $outcome = null;
+        foreach ($result['student_outcomes'] as $so) {
+            if ($so['so_number'] === $unique_so2) {
+                $outcome = $so;
+                break;
+            }
+        }
+        $this->assertNotNull($outcome, "Created SO {$unique_so2} not found in results");
         $this->assertEquals('Resolución de Problemas', $outcome['title']);
     }
 
@@ -225,6 +243,7 @@ class api_test extends advanced_testcase {
             'performance_level_id' => $lvl_id,
             'score' => 3.0,
             'feedback' => 'Good work',
+            'studentid' => $student->id,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
@@ -330,6 +349,7 @@ class api_test extends advanced_testcase {
                 'performance_level_id' => $lvl_id,
                 'score' => 3.0,
                 'feedback' => 'Test',
+                'studentid' => $student->id,
                 'timecreated' => time(),
                 'timemodified' => time(),
             ]);
@@ -430,6 +450,7 @@ class api_test extends advanced_testcase {
                 'performance_level_id' => $lvl_id,
                 'score' => 3.0,
                 'feedback' => 'Test',
+                'studentid' => $student->id,
                 'timecreated' => time(),
                 'timemodified' => time(),
             ]);
