@@ -277,7 +277,8 @@ class api_test extends advanced_testcase {
         // Create users
         $teacher1 = $this->getDataGenerator()->create_user();
         $teacher2 = $this->getDataGenerator()->create_user();
-        $student = $this->getDataGenerator()->create_user();
+        $student1 = $this->getDataGenerator()->create_user();
+        $student2 = $this->getDataGenerator()->create_user();
         $course = $this->getDataGenerator()->create_course();
         $assign = $this->getDataGenerator()->create_module('assign', ['course' => $course->id]);
 
@@ -327,8 +328,16 @@ class api_test extends advanced_testcase {
             'timemodified' => time(),
         ]);
 
-        // Create evaluations from two different teachers
-        foreach ([$teacher1, $teacher2] as $teacher) {
+        // Create evaluations from two different teachers grading different students
+        $teachers_students = [
+            ['teacher' => $teacher1, 'student' => $student1],
+            ['teacher' => $teacher2, 'student' => $student2]
+        ];
+        
+        foreach ($teachers_students as $pair) {
+            $teacher = $pair['teacher'];
+            $student = $pair['student'];
+            
             $grade = $DB->insert_record('assign_grades', [
                 'assignment' => $assign->id,
                 'userid' => $student->id,
