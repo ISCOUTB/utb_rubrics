@@ -37,9 +37,12 @@ class api_test extends advanced_testcase {
         $this->resetAfterTest(true);
         $this->setAdminUser();
 
+        // Use unique SO numbers to avoid duplicates
+        $unique_so = 'SOTEST' . time();
+        
         // Create a student outcome
         $so_id = $DB->insert_record('gradingform_utb_so', [
-            'so_number' => 'SO1',
+            'so_number' => $unique_so,
             'title_en' => 'Test Outcome',
             'title_es' => 'Resultado de Prueba',
             'description_en' => 'Test description',
@@ -84,7 +87,7 @@ class api_test extends advanced_testcase {
         $this->assertGreaterThan(0, $result['count']);
         
         $outcome = $result['student_outcomes'][0];
-        $this->assertEquals('SO1', $outcome['so_number']);
+        $this->assertEquals($unique_so, $outcome['so_number']);
         $this->assertEquals('Test Outcome', $outcome['title']);
         $this->assertArrayHasKey('indicators', $outcome);
         $this->assertNotEmpty($outcome['indicators']);
@@ -110,8 +113,9 @@ class api_test extends advanced_testcase {
         $this->setAdminUser();
 
         // Create a student outcome
+        $unique_so2 = 'SOTEST' . time() . '_es';
         $so_id = $DB->insert_record('gradingform_utb_so', [
-            'so_number' => 'SO2',
+            'so_number' => $unique_so2,
             'title_en' => 'Problem Solving',
             'title_es' => 'Resolución de Problemas',
             'description_en' => 'Ability to solve problems',
@@ -153,13 +157,15 @@ class api_test extends advanced_testcase {
             'method' => 'utbrubrics',
             'name' => 'Test Rubric',
             'status' => 20,
+            'usercreated' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
         // Create student outcome, indicator, and level
+        $unique_so5 = 'SOTEST' . time() . '_nofilter';
         $so_id = $DB->insert_record('gradingform_utb_so', [
-            'so_number' => 'SO1',
+            'so_number' => $unique_so5,
             'title_en' => 'Test',
             'title_es' => 'Prueba',
             'description_en' => 'Test',
@@ -231,7 +237,7 @@ class api_test extends advanced_testcase {
         
         $eval = $result['evaluations'][0];
         $this->assertEquals('A', $eval['indicator_letter']);
-        $this->assertEquals('SO1', $eval['so_number']);
+        $this->assertEquals($unique_so5, $eval['so_number']);
         $this->assertEquals(3.0, $eval['score']);
     }
 
@@ -257,12 +263,14 @@ class api_test extends advanced_testcase {
             'method' => 'utbrubrics',
             'name' => 'Test',
             'status' => 20,
+            'usercreated' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
+        $unique_so3 = 'SOTEST' . time() . '_grader';
         $so_id = $DB->insert_record('gradingform_utb_so', [
-            'so_number' => 'SO1',
+            'so_number' => $unique_so3,
             'title_en' => 'Test',
             'title_es' => 'Prueba',
             'description_en' => 'Test',
@@ -354,12 +362,14 @@ class api_test extends advanced_testcase {
             'method' => 'utbrubrics',
             'name' => 'Test',
             'status' => 20,
+            'usercreated' => 2,
             'timecreated' => time(),
             'timemodified' => time(),
         ]);
 
+        $unique_so4 = 'SOTEST' . time() . '_student';
         $so_id = $DB->insert_record('gradingform_utb_so', [
-            'so_number' => 'SO1',
+            'so_number' => $unique_so4,
             'title_en' => 'Test',
             'title_es' => 'Prueba',
             'description_en' => 'Test',
