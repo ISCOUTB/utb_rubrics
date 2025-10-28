@@ -113,6 +113,9 @@ class get_evaluations extends external_api {
                     eval.performance_level_id,
                     eval.score,
                     eval.feedback,
+                    eval.courseid,
+                    eval.activityname,
+                    eval.studentid,
                     eval.timecreated,
                     eval.timemodified,
                     gi.itemid,
@@ -129,13 +132,21 @@ class get_evaluations extends external_api {
                     lvl.title_en as performance_level_name_en,
                     lvl.title_es as performance_level_name_es,
                     lvl.minscore as min_score,
-                    lvl.maxscore as max_score
+                    lvl.maxscore as max_score,
+                    c.fullname as coursename,
+                    u.firstname as grader_firstname,
+                    u.lastname as grader_lastname,
+                    s.firstname as student_firstname,
+                    s.lastname as student_lastname
                 FROM {gradingform_utb_eval} eval
                 INNER JOIN {grading_instances} gi ON eval.instanceid = gi.id
                 INNER JOIN {grading_definitions} gd ON gi.definitionid = gd.id
                 INNER JOIN {gradingform_utb_ind} ind ON eval.indicator_id = ind.id
                 INNER JOIN {gradingform_utb_so} so ON ind.student_outcome_id = so.id
-                LEFT JOIN {gradingform_utb_lvl} lvl ON eval.performance_level_id = lvl.id";
+                LEFT JOIN {gradingform_utb_lvl} lvl ON eval.performance_level_id = lvl.id
+                LEFT JOIN {course} c ON eval.courseid = c.id
+                LEFT JOIN {user} u ON gi.raterid = u.id
+                LEFT JOIN {user} s ON eval.studentid = s.id";
 
         $params = [];
         $where_conditions = [];
@@ -203,6 +214,10 @@ class get_evaluations extends external_api {
                 }
             }
             
+            // Format grader and student names
+            $grader_name = trim($record->grader_firstname . ' ' . $record->grader_lastname);
+            $student_name = trim($record->student_firstname . ' ' . $record->student_lastname);
+            
             $evaluations[] = [
                 'id' => (int) $record->id,
                 'instanceid' => (int) $record->instanceid,
@@ -221,8 +236,14 @@ class get_evaluations extends external_api {
                 'max_score' => $record->max_score !== null ? (float) $record->max_score : null,
                 'score' => $record->score !== null ? (float) $record->score : null,
                 'feedback' => $record->feedback,
+                'courseid' => (int) $record->courseid,
+                'coursename' => $record->coursename,
+                'activityname' => $record->activityname,
                 'assignment_id' => $assignment_id,
+                'student_id' => (int) $record->studentid,
+                'student_name' => $student_name,
                 'grader_id' => (int) $record->grader_id,
+                'grader_name' => $grader_name,
                 'rubric_name' => $record->rubric_name,
                 'timecreated' => (int) $record->timecreated,
                 'timemodified' => (int) $record->timemodified,
@@ -257,8 +278,14 @@ class get_evaluations extends external_api {
                     'max_score' => new external_value(PARAM_FLOAT, 'Maximum score for the level', VALUE_OPTIONAL),
                     'score' => new external_value(PARAM_FLOAT, 'Score given to the student', VALUE_OPTIONAL),
                     'feedback' => new external_value(PARAM_RAW, 'Feedback text', VALUE_OPTIONAL),
+                    'courseid' => new external_value(PARAM_INT, 'Course ID'),
+                    'coursename' => new external_value(PARAM_TEXT, 'Course name'),
+                    'activityname' => new external_value(PARAM_TEXT, 'Activity name'),
                     'assignment_id' => new external_value(PARAM_INT, 'Assignment ID'),
+                    'student_id' => new external_value(PARAM_INT, 'ID of the student who was graded'),
+                    'student_name' => new external_value(PARAM_TEXT, 'Full name of the student'),
                     'grader_id' => new external_value(PARAM_INT, 'ID of user who graded'),
+                    'grader_name' => new external_value(PARAM_TEXT, 'Full name of the grader (teacher)'),
                     'rubric_name' => new external_value(PARAM_TEXT, 'Name of the rubric'),
                     'timecreated' => new external_value(PARAM_INT, 'Time created'),
                     'timemodified' => new external_value(PARAM_INT, 'Time modified'),
