@@ -405,9 +405,9 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             /* 3-4 levels: Adaptive based on available space */
             .gradingform_utbrubrics .performance-levels.levels-3 .level-option,
             .gradingform_utbrubrics .performance-levels.levels-4 .level-option { 
-                flex: 0 0 calc(50% - 4px); /* 2 per row by default for readability */
-                width: calc(50% - 4px);
-                min-width: 280px;
+                flex: 0 0 calc(25% - 4px); /* 4 por fila para aprovechar mejor el espacio */
+                width: calc(25% - 4px);
+                min-width: 140px; /* Ancho mínimo reducido para espacios estrechos */
             }
             
             /* 5-6 levels: Adaptive, prioritize readability */
@@ -506,6 +506,11 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
                 border-radius: 8px !important;
             }
+            
+            /* Ajustar padding del card-body para aprovechar espacio */
+            .gradingform_utbrubrics .level-option .card-body {
+                padding: 6px 8px !important;
+            }
             .gradingform_utbrubrics .level-option .card:hover { 
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
@@ -593,13 +598,17 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             }
             .gradingform_utbrubrics .level-name { 
                 color: #2c3e50; 
-                font-size: 1em; 
+                font-size: 0.85em; 
                 font-weight: bold;
                 margin-bottom: 8px;
                 text-shadow: none !important;
                 background: none !important;
                 border: none !important;
                 box-shadow: none !important;
+                white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 4px; /* Padding mínimo para aprovechar espacio */
             }
             /* Keep text effects clean but allow card styling */
             .gradingform_utbrubrics .level-name,
@@ -2250,7 +2259,7 @@ class gradingform_utbrubrics_renderer extends plugin_renderer_base {
             // Level name with range - this should be the header/title
             $labelContent .= html_writer::div(
                 html_writer::tag('strong', format_string($lev['definition'])),
-                'level-name text-center mb-2 bg-light p-2 rounded'
+                'level-name text-center mb-1 bg-light p-1 rounded'
             );
             
             // Add detailed description ONLY if it exists and is not empty

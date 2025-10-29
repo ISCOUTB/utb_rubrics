@@ -28,17 +28,22 @@ jobs:
     - name: Actualizar version.php con la versión del tag
       run: |
         VERSION_NUMBER="${{ steps.get_version.outputs.VERSION_NUMBER }}"
-        # Convertir versión como "1.2.3" al formato Moodle "2025092800"
-        # Por seguridad, usamos timestamp actual
-        TIMESTAMP=$(date +%Y%m%d%H)
         
-        # Actualizar version.php con la versión de release
+        # Actualizar solo el release en version.php
+        # La versión (timestamp) ya debe estar correctamente configurada en version.php
         sed -i "s/\$plugin->release\s*=\s*'[^']*'/\$plugin->release = '$VERSION_NUMBER'/" version.php
-        sed -i "s/\$plugin->version\s*=\s*[0-9]*/\$plugin->version = $TIMESTAMP/" version.php
+        
+        # Extraer la versión actual del version.php para verificación
+        CURRENT_VERSION=$(grep "^\$plugin->version" version.php | grep -o "[0-9]*" | head -1)
         
         echo "version.php actualizado:"
         echo "- Release: $VERSION_NUMBER"
-        echo "- Versión: $TIMESTAMP"
+        echo "- Versión (timestamp): $CURRENT_VERSION (sin modificar)"
+        
+        # Verificar que la versión tiene formato correcto (10 dígitos YYYYMMDDHH)
+        if [ ${#CURRENT_VERSION} -ne 10 ]; then
+          echo "⚠️  ADVERTENCIA: La versión $CURRENT_VERSION no tiene formato YYYYMMDDHH"
+        fi
 
     - name: Validar estructura del plugin
       run: |
@@ -52,7 +57,10 @@ jobs:
           "db/install.xml"
           "db/install.php"
           "db/upgrade.php"
+          "db/services.php"
           "lang/en/gradingform_utbrubrics.php"
+          "classes/external/get_evaluations.php"
+          "classes/external/get_student_outcomes.php"
         )
         
         for file in "${required_files[@]}"; do
@@ -82,6 +90,7 @@ jobs:
         mkdir -p "$PLUGIN_DIR/lang/en"
         mkdir -p "$PLUGIN_DIR/lang/es"
         mkdir -p "$PLUGIN_DIR/tests"
+        mkdir -p "$PLUGIN_DIR/classes/external"
         
         echo "📋 Copiando archivos del plugin con estructura correcta..."
         
@@ -124,6 +133,12 @@ jobs:
         if [ -d "tests" ]; then
           cp tests/* "$PLUGIN_DIR/tests/" 2>/dev/null || true
           echo "✅ Copiado: tests/$(ls tests | wc -l) archivos"
+        fi
+        
+        # Copiar archivos de clases (APIs externas)
+        if [ -d "classes/external" ]; then
+          cp classes/external/* "$PLUGIN_DIR/classes/external/" 2>/dev/null || true
+          echo "✅ Copiado: classes/external/$(ls classes/external | wc -l) archivos"
         fi
         
         # Mostrar estructura final
@@ -181,7 +196,10 @@ jobs:
           "$PLUGIN_PATH/version.php"
           "$PLUGIN_PATH/lib.php" 
           "$PLUGIN_PATH/db/install.xml"
+          "$PLUGIN_PATH/db/services.php"
           "$PLUGIN_PATH/lang/en/gradingform_utbrubrics.php"
+          "$PLUGIN_PATH/classes/external/get_evaluations.php"
+          "$PLUGIN_PATH/classes/external/get_student_outcomes.php"
         )
         
         echo "🔍 Verificando archivos críticos..."
@@ -284,7 +302,7 @@ jobs:
         } > release_notes.md
 
     - name: Crear Release en GitHub
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           moodle-gradingform_utbrubrics-${{ steps.get_version.outputs.VERSION_NUMBER }}.zip

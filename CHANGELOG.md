@@ -2,6 +2,14 @@
 
 Todos los cambios importantes de este proyecto se documentarán en este archivo.
 
+## [1.1.2] - 2025-10-28
+
+- Correciones menores en Vista Profesor y en la API.
+
+## [1.1.1] - 2025-10-28
+
+- Se añaden más campos a las respuestas de la UTB Web Service para las evaluaciones de rúbricas.
+
 ## [1.1.0] - 2025-10-23
 
 - Novedad: Nueva API Web Service para acceder a las evaluaciones de rúbricas UTB e información de los students outcomes.
