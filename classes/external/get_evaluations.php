@@ -196,9 +196,11 @@ class get_evaluations extends external_api {
 
         $sql .= " ORDER BY eval.timemodified DESC, so.sortorder, ind.indicator_letter";
 
-        // Debug: Log the SQL query and params
-        error_log("UTB API SQL: " . $sql);
-        error_log("UTB API Params: " . json_encode($params));
+        // Debug logging only in development mode
+        if (debugging('', DEBUG_DEVELOPER)) {
+            error_log("UTB API SQL: " . $sql);
+            error_log("UTB API Params: " . json_encode($params));
+        }
 
         $records = $DB->get_records_sql($sql, $params);
 
