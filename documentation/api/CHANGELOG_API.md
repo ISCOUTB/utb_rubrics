@@ -1,5 +1,8 @@
 # 📝 Changelog - UTB Rubrics API
 
+## Version 1.1.1 (28 Oct 2025)
+- Improved API response (new fields added to `get_evaluations` function)
+
 ## Version 1.1.0 (23 Oct 2025) - 🎉 Initial Release of UTB Rubrics API
 - Created Web Services API for UTB Rubrics plugin
 - Two main functions: `get_evaluations` and `get_student_outcomes`
